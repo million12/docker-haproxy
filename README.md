@@ -15,7 +15,7 @@ This image comes with inotifywatch for monitoring changes to `haproxy.cfg` at `/
 
 ### Basic
 
-`docker run -ti -p 80:80 -p 443:443 million12/centos-haproxy -f /etc/haproxy/haproxy.cfg`
+`docker run -ti -p 80:80 -p 443:443 million12/haproxy -f /etc/haproxy/haproxy.cfg`
 
 ### Mount custom config, override some options
 
