@@ -1,0 +1,13 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  override:
+    - docker build -t million12/haproxy .
+
+test:
+  override:
+    - docker run -d -p 80:80 million12/haproxy -f /etc/haproxy/haproxy.cfg ; sleep 5
+    # Test:
+    - curl -u admin:admin http://127.0.0.1/admin?stats
