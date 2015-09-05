@@ -8,8 +8,8 @@ HAPROXY_USER_PARAMS=$@
 
 # Internal params
 HAPROXY_PID_FILE="/var/run/haproxy.pid"
-HAPROXY_CMD="/usr/sbin/haproxy -f ${HAPROXY_CONFIG} ${HAPROXY_USER_PARAMS} -D -p ${HAPROXY_PID_FILE}"
-HAPROXY_CHECK_CONFIG_CMD="/usr/sbin/haproxy -f ${HAPROXY_CONFIG} -c"
+HAPROXY_CMD="/usr/local/sbin/haproxy -f ${HAPROXY_CONFIG} ${HAPROXY_USER_PARAMS} -D -p ${HAPROXY_PID_FILE}"
+HAPROXY_CHECK_CONFIG_CMD="/usr/local/sbin/haproxy -f ${HAPROXY_CONFIG} -c"
 
 
 #######################################
@@ -33,7 +33,7 @@ print_config() {
 }
 
 
-# Launch HAProxy. 
+# Launch HAProxy.
 log $HAPROXY_CMD && print_config
 $HAPROXY_CHECK_CONFIG_CMD
 $HAPROXY_CMD
