@@ -1,12 +1,13 @@
 FROM centos:centos7
 MAINTAINER Marcin Ryzycki marcin@m12.io, Przemyslaw Ozgo linux@ozgo.info
 
-ENV HAPROXY_VERSION=1.5.14
+ENV HAPROXY_MJR_VERSION=1.6
+ENV HAPROXY_VERSION=1.6.1
 
 RUN \
   yum install -y epel-release && \
   yum install -y inotify-tools wget tar gzip make gcc pcre-devel openssl-devel && \
-  wget -O /tmp/haproxy.tgz http://www.haproxy.org/download/1.5/src/haproxy-${HAPROXY_VERSION}.tar.gz && \
+  wget -O /tmp/haproxy.tgz http://www.haproxy.org/download/${HAPROXY_MJR_VERSION}/src/haproxy-${HAPROXY_VERSION}.tar.gz && \
   mkdir -p /usr/local/haproxy && \
   tar -zxvf /tmp/haproxy.tgz -C /usr/local/haproxy/ --strip-components 1 && \
   rm -f /tmp/haproxy.tgz && \
