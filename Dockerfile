@@ -6,25 +6,39 @@ ENV HAPROXY_VERSION=1.6.3
 
 RUN \
   yum install -y epel-release && \
-  yum install -y inotify-tools wget tar gzip make gcc pcre-devel openssl-devel && \
+  yum update -y && \
+  `# Install build tools. Note: perl needed to compile openssl...` \
+  yum install -y inotify-tools wget tar gzip make gcc perl pcre-devel zlib-devel && \
+
+  `# Install newest openssl...` \
+  wget -O /tmp/openssl.tgz https://www.openssl.org/source/openssl-1.0.2-latest.tar.gz && \
+  tar -zxf /tmp/openssl.tgz -C /tmp && \
+  cd /tmp/openssl-* && \
+  ./config --prefix=/usr \
+    --openssldir=/etc/ssl \
+    --libdir=lib          \
+    no-shared zlib-dynamic && \
+  make && make install_sw && \
+  cd && rm -rf /tmp/openssl* && \
+
+  `# Install HAProxy...` \
   wget -O /tmp/haproxy.tgz http://www.haproxy.org/download/${HAPROXY_MJR_VERSION}/src/haproxy-${HAPROXY_VERSION}.tar.gz && \
-  mkdir -p /usr/local/haproxy && \
-  tar -zxvf /tmp/haproxy.tgz -C /usr/local/haproxy/ --strip-components 1 && \
-  rm -f /tmp/haproxy.tgz && \
-  cd /usr/local/haproxy && \
+  tar -zxvf /tmp/haproxy.tgz -C /tmp && \
+  cd /tmp/haproxy-* && \
   make \
-  USE_LINUX_TPROXY=1 USE_ZLIB=1 \
-  USE_REGPARM=1 \
-  USE_OPENSSL=1 \
-  USE_PCRE=1 \
-  TARGET=linux2628 \
-  CFLAGS="-O2 -g -fno-strict-aliasing -DTCP_USER_TIMEOUT=18" && \
+    TARGET=linux2628 USE_LINUX_TPROXY=1 USE_ZLIB=1 USE_REGPARM=1 USE_PCRE=1 USE_PCRE_JIT=1 \
+    USE_OPENSSL=1 SSL_INC=/usr/include SSL_LIB=/usr/lib ADDLIB=-ldl \
+    CFLAGS="-O2 -g -fno-strict-aliasing -DTCP_USER_TIMEOUT=18" && \
   make install && \
-  yum remove -y make gcc pcre-devel openssl-devel && \
-  yum clean all && \
-  rm -rf /usr/local/haproxy && \
+  rm -rf /tmp/haproxy* && \
+
+  `# Configure HAProxy...` \
   mkdir -p /var/lib/haproxy && \
-  groupadd haproxy && adduser haproxy -g haproxy && chown -R haproxy:haproxy /var/lib/haproxy
+  groupadd haproxy && adduser haproxy -g haproxy && chown -R haproxy:haproxy /var/lib/haproxy && \
+
+  `# Clean up: build tools...` \
+  yum remove -y make gcc pcre-devel && \
+  yum clean all
 
 COPY container-files /
 

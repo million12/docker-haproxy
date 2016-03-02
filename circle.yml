@@ -13,14 +13,17 @@ test:
     #
     - docker run -ti million12/haproxy -vv
     - docker run -ti million12/haproxy -vv | grep "HA-Proxy version"
-    
+    - docker run -ti million12/haproxy -vv | grep "Encrypted password support"
+    - docker run -ti million12/haproxy -vv | grep "Encrypted password support"
+    - docker run -ti million12/haproxy -vv | grep "OpenSSL 1.0.2"
+
     #
     # Test daemon mode (default settings)
     #
     - docker run -d -p 8080:80 --name haproxy million12/haproxy && sleep 1
     - curl -u admin:admin http://127.0.0.1:8080/admin?stats
     - docker rm -f haproxy || true
-    
+
     #
     # Test providing custom HAProxy config
     # Test restarting after making changes in that config
@@ -30,13 +33,13 @@ test:
         background: true
     # Test if HAProxy uses the provided alternative config
     - grep "HAProxy started with /my-haproxy.cfg config" ${CIRCLE_ARTIFACTS}/docker-haproxy.log
-    
+
     # Make a change and check if HAProxy restarts
     - echo "" >> container-files/etc/haproxy/haproxy.cfg && sleep 1
     - grep "Restarting HAProxy due to config changes" ${CIRCLE_ARTIFACTS}/docker-haproxy.log
     - curl -u admin:admin http://127.0.0.1:8080/admin?stats
-    
-    # Make invalid entry in config and test restart 
+
+    # Make invalid entry in config and test restart
     # and check if we have warning about errors
     - echo "blabla" > container-files/etc/haproxy/haproxy.cfg && sleep 1
     # Mount the mounted .cfg file and check its content - we expect there 'blabla'
