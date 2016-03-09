@@ -35,6 +35,11 @@ RUN \
   `# Configure HAProxy...` \
   mkdir -p /var/lib/haproxy && \
   groupadd haproxy && adduser haproxy -g haproxy && chown -R haproxy:haproxy /var/lib/haproxy && \
+  `# Generate dummy SSL cert for HAProxy...` \
+  openssl genrsa -out /etc/ssl/dummy.key 2048 && \
+  openssl req -new -key /etc/ssl/dummy.key -out /etc/ssl/dummy.csr -subj "/C=GB/L=London/O=Company Ltd/CN=haproxy" && \
+  openssl x509 -req -days 3650 -in /etc/ssl/dummy.csr -signkey /etc/ssl/dummy.key -out /etc/ssl/dummy.crt && \
+  cat /etc/ssl/dummy.crt /etc/ssl/dummy.key > /etc/ssl/dummy.pem && \
 
   `# Clean up: build tools...` \
   yum remove -y make gcc pcre-devel && \

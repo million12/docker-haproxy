@@ -34,6 +34,11 @@ print_config() {
 
 
 # Launch HAProxy.
+# In the default attached haproxy.cfg `web.server` host is used for back-end nodes.
+# If that host doesn't exist in /etc/hosts, create it and point to localhost,
+# so HAProxy can start with the default haproxy.cfg config without throwing errors.
+grep --silent -e "web.server" /etc/hosts || echo "127.0.0.1 web.server" >> /etc/hosts
+
 log $HAPROXY_CMD && print_config
 $HAPROXY_CHECK_CONFIG_CMD
 $HAPROXY_CMD
