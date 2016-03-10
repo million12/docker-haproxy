@@ -1,0 +1,18 @@
+# Launch Nginx backend server
+nginx:
+  image: million12/nginx
+  ports:
+    - '4080:80'
+    - '4443:443'
+  environment:
+    - NGINX_GENERATE_DEFAULT_VHOST=true
+
+
+# Launch HAProxy
+haproxy:
+  image: million12/haproxy
+  ports:
+    - '8080:80'
+    - '8443:443'
+  links:
+    - nginx:web.server

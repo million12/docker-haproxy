@@ -1,8 +1,15 @@
 machine:
   services:
     - docker
+  hosts:
+    nginx: 127.0.0.1
+    haproxy: 127.0.0.1
 
 dependencies:
+  pre:
+    - docker pull million12/nginx: # used in Tests/docker-compose.yml
+        background: true
+
   override:
     - docker build -t million12/haproxy .
 
@@ -13,7 +20,6 @@ test:
     #
     - docker run -ti million12/haproxy -vv
     - docker run -ti million12/haproxy -vv | grep "HA-Proxy version"
-    - docker run -ti million12/haproxy -vv | grep "Encrypted password support"
     - docker run -ti million12/haproxy -vv | grep "Encrypted password support"
     - docker run -ti million12/haproxy -vv | grep "OpenSSL 1.0.2"
 
@@ -37,7 +43,12 @@ test:
     # Make a change and check if HAProxy restarts
     - echo "" >> container-files/etc/haproxy/haproxy.cfg && sleep 1
     - grep "Restarting HAProxy due to config changes" ${CIRCLE_ARTIFACTS}/docker-haproxy.log
-    - curl -u admin:admin http://127.0.0.1:8080/admin?stats
+
+    # Check HAProxy stats
+    - curl -sSLi http://haproxy:8080/admin?stats | grep '401 Unauthorized'
+    - curl -sSLi --user admin:admin http://haproxy:8080/admin?stats
+    - curl -sSLi --user admin:admin http://haproxy:8080/admin?stats | grep '200 OK'
+    - curl -sSLi --user admin:admin http://haproxy:8080/admin?stats | grep 'Statistics Report'
 
     # Make invalid entry in config and test restart
     # and check if we have warning about errors
@@ -46,3 +57,26 @@ test:
     - docker run --volumes-from haproxy --entrypoint sh million12/haproxy -c 'cat /my-haproxy.cfg' | grep 'blabla'
     # Check for HAProxy warnings
     - grep "Fatal errors found in configuration" ${CIRCLE_ARTIFACTS}/docker-haproxy.log
+    - docker rm -f haproxy || true
+
+    #
+    # Test whole stack with Nginx back-end - @see Tests/docker-compose.yml
+    #
+    - docker-compose -f Tests/docker-compose.yml up -d
+    - sleep 5
+
+    # Test direct request to Nginx
+    - curl -sSLi http://nginx:4080  | grep '200 OK'
+    - curl -sSLi http://nginx:4080  | grep 'default vhost'
+    - curl -sSLi --insecure https://nginx:4443 | grep '200 OK'
+    - curl -sSLi --insecure https://nginx:8443 | grep 'default vhost'
+
+    # Test requests via HAProxy
+    - curl -sSLi http://haproxy:8080 | grep '200 OK'
+    - curl -sSLi http://haproxy:8080 | grep 'default vhost'
+    - curl -sSLi --insecure https://haproxy:8443 | grep '200 OK'
+    - curl -sSLi --insecure https://haproxy:8443 | grep 'default vhost'
+    - openssl s_client -connect haproxy:8443 -nextprotoneg ''
+    - openssl s_client -connect haproxy:8443 -nextprotoneg '' | grep 'Secure Renegotiation IS supported'
+    - openssl s_client -connect haproxy:8443 -nextprotoneg '' | grep 'Protocol' | grep TLSv1.2
+#    - openssl s_client -connect haproxy:8443 -alpn 'h2' # CircleCI doesn't have openssl client with ALPN support...
