@@ -1,14 +1,19 @@
 # HAProxy Load Balancer
 [![Circle CI](https://circleci.com/gh/million12/docker-haproxy/tree/master.svg?style=svg)](https://circleci.com/gh/million12/docker-haproxy/tree/master)
 
-This is a [million12/haproxy](https://registry.hub.docker.com/u/million12/haproxy/) docker container with HAProxy load balancer. This work is very similar to official [dockerfile/haproxy](https://registry.hub.docker.com/u/dockerfile/haproxy/), but it's based on CentOS-7 and, more importantly, offers ability to provide any arguments to haproxy process. It's also pretty lightweight, only ~240M (vs. ~420M Ubuntu-based dockerfile/haproxy).
+HAProxy docker container [million12/haproxy](https://registry.hub.docker.com/u/million12/haproxy/) with ALPN and HTTP/2 support.
 
-This container is built that any extra parameters provided to `docker run` will be passed directly to `haproxy` command. For example, if you run `docker run [run options] million12/haproxy -n 1000` you pass `-n 1000` to haproxy daemon.
+# Features
 
-The default [haproxy.cfg](container-files/etc/haproxy/haproxy.cfg) is provided just for demonstration purposes, so of course you will want to override it.
-
-#### Auto restart when config changes
-This container comes with inotify to monitor changes in HAProxy config and **reload** HAProxy daemon. The reload is done in a way that no connection is lost.
+* **Support for HTTP/2** with ALPN
+* CentOS 7 based
+* Ability to **provide any arguments to haproxy** process  
+  Any extra parameters provided to `docker run` will be passed directly to `haproxy` command.  
+  For example, if you run `docker run [run options] million12/haproxy -n 1000` you pass `-n 1000` to haproxy daemon.
+* Pretty **lightweight**, only ~290M (with OpenSSL and HAProxy compiled from source).
+* **Default [haproxy.cfg](container-files/etc/haproxy/haproxy.cfg) provided** for demonstration purposes. You can easily mount your own or point to different location using `HAPROXY_CONFIG` env.
+* **Auto restart when config changes**  
+  This container comes with inotify to monitor changes in HAProxy config and **reload** HAProxy daemon. The reload is done in a way that no connection is lost.
 
 
 ## ENV variables
