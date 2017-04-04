@@ -1,7 +1,20 @@
 # HAProxy Load Balancer
-[![Circle CI](https://circleci.com/gh/million12/docker-haproxy/tree/master.svg?style=svg)](https://circleci.com/gh/million12/docker-haproxy/tree/master)
+[![CircleCI Build Status](https://img.shields.io/circleci/project/million12/docker-haproxy/master.svg)](https://circleci.com/gh/million12/docker-haproxy)  (latest)  
+[![GitHub Open Issues](https://img.shields.io/github/issues/million12/docker-haproxy.svg)](https://github.com/million12/docker-haproxy/issues)
+[![GitHub Stars](https://img.shields.io/github/stars/million12/docker-haproxy.svg)](https://github.com/million12/docker-haproxy)
+[![GitHub Forks](https://img.shields.io/github/forks/million12/docker-haproxy.svg)](https://github.com/million12/docker-haproxy)  
+[![Stars on Docker Hub](https://img.shields.io/docker/stars/million12/haproxy.svg)](https://hub.docker.com/r/million12/haproxy)
+[![Pulls on Docker Hub](https://img.shields.io/docker/pulls/million12/haproxy.svg)](https://hub.docker.com/r/million12/haproxy)  
+[![](https://images.microbadger.com/badges/version/million12/haproxy.svg)](http://microbadger.com/images/million12/haproxy)
+[![](https://images.microbadger.com/badges/license/million12/haproxy.svg)](http://microbadger.com/images/million12/haproxy)
+[![](https://images.microbadger.com/badges/image/million12/haproxy.svg)](http://microbadger.com/images/million12/haproxy)
+
 
 HAProxy docker container [million12/haproxy](https://registry.hub.docker.com/u/million12/haproxy/) with ALPN and HTTP/2 support.
+
+##### Build status (latest versions)
+* `million12/haproxy:latest` - [![CircleCI Build Status](https://img.shields.io/circleci/project/million12/docker-haproxy/master.svg)](https://circleci.com/gh/million12/docker-haproxy)  
+* `million12/haproxy:1.6.4` - [![CircleCI Build Status](https://img.shields.io/circleci/project/million12/docker-haproxy/1.6.4.svg)](https://circleci.com/gh/million12/docker-haproxy)  
 
 # Features
 
@@ -45,7 +58,3 @@ The default URL for stats is `http://CONTAINER_IP/admin?stats` with username:pas
 
 Author: Marcin ryzy Ryzycki (<marcin@m12.io>)  
 Author: Przemyslaw Ozgo (<linux@ozgo.info>)
-
----
-
-**Sponsored by [Prototype Brewery](http://prototypebrewery.io/)** - the new prototyping tool for building highly-interactive prototypes of your website or web app. Built on top of [Neos CMS](https://www.neos.io/) and [Zurb Foundation](http://foundation.zurb.com/) framework.
