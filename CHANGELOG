@@ -1,3 +1,58 @@
+2016/05/10 : 1.6.5
+    - BUG/MINOR: log: Don't use strftime() which can clobber timezone if chrooted
+    - BUILD: namespaces: fix a potential build warning in namespaces.c
+    - DOC: add encoding to json converter example
+    - BUG/MINOR: conf: "listener id" expects integer, but its not checked
+    - DOC: Clarify tunes.vars.xxx-max-size settings
+    - BUG/MEDIUM: peers: fix incorrect age in frequency counters
+    - BUG/MEDIUM: Fix RFC5077 resumption when more than TLS_TICKETS_NO are present
+    - BUG/MAJOR: Fix crash in http_get_fhdr with exactly MAX_HDR_HISTORY headers
+    - BUG/MINOR: lua: can't load external libraries
+    - DOC: "addr" parameter applies to both health and agent checks
+    - DOC: timeout client: pointers to timeout http-request
+    - DOC: typo on stick-store response
+    - DOC: stick-table: amend paragraph blaming the loss of table upon reload
+    - DOC: typo: ACL subdir match
+    - DOC: typo: maxconn paragraph is wrong due to a wrong buffer size
+    - DOC: regsub: parser limitation about the inability to use closing square brackets
+    - DOC: typo: req.uri is now replaced by capture.req.uri
+    - DOC: name set-gpt0 mismatch with the expected keyword
+    - BUG/MEDIUM: stick-tables: some sample-fetch doesn't work in the connection state.
+    - DOC: fix "needed" typo
+    - BUG/MINOR: dns: inapropriate way out after a resolution timeout
+    - BUG/MINOR: dns: trigger a DNS query type change on resolution timeout
+    - BUG/MINOR : allow to log cookie for tarpit and denied request
+    - OPTIM/MINOR: session: abort if possible before connecting to the backend
+    - BUG/MEDIUM: trace.c: rdtsc() is defined in two files
+    - BUG/MEDIUM: channel: fix miscalculation of available buffer space (2nd try)
+    - BUG/MINOR: cfgparse: couple of small memory leaks.
+    - BUG/MEDIUM: sample: initialize the pointer before parse_binary call.
+    - DOC: fix discrepancy in the example for http-request redirect
+    - DOC: Clarify IPv4 address / mask notation rules
+    - CLEANUP: fix inconsistency between fd->iocb, proto->accept and accept()
+    - BUG/MEDIUM: fix maxaccept computation on per-process listeners
+    - BUG/MINOR: listener: stop unbound listeners on startup
+    - BUG/MINOR: fix maxaccept computation according to the frontend process range
+    - MEDIUM: unblock signals on startup.
+    - BUG/MEDIUM: channel: don't allow to overwrite the reserve until connected
+    - BUG/MEDIUM: channel: incorrect polling condition may delay event delivery
+    - BUG/MEDIUM: channel: fix miscalculation of available buffer space (3rd try)
+    - BUG/MEDIUM: log: fix risk of segfault when logging HTTP fields in TCP mode
+    - BUG/MEDIUM: lua: protects the upper boundary of the argument list for converters/fetches.
+    - BUG/MINOR: log: fix a typo that would cause %HP to log <BADREQ>
+    - MINOR: channel: add new function channel_congested()
+    - BUG/MEDIUM: http: fix risk of CPU spikes with pipelined requests from dead client
+    - BUG/MAJOR: channel: fix miscalculation of available buffer space (4th try)
+    - BUG/MEDIUM: stream: ensure the SI_FL_DONT_WAKE flag is properly cleared
+    - BUG/MEDIUM: channel: fix inconsistent handling of 4GB-1 transfers
+    - BUG/MEDIUM: stats: show servers state may show an empty or incomplete result
+    - BUG/MEDIUM: stats: show backend may show an empty or incomplete result
+    - MINOR: stats: fix typo in help messages
+    - MINOR: stats: show stat resolvers missing in the help message
+    - BUG/MINOR: dns: fix DNS header definition
+    - BUG/MEDIUM: dns: fix alignment issue when building DNS queries
+    - CLEANUP/MINOR: stats: fix accidental addition of member "env" in the applet ctx
+
 2016/03/14 : 1.6.4
     - BUG/MINOR: http: fix several off-by-one errors in the url_param parser
     - BUG/MINOR: http: Be sure to process all the data received from a server
