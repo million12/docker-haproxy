@@ -1,5 +1,5 @@
 # HAProxy Load Balancer
-[![CircleCI Build Status](https://img.shields.io/circleci/project/million12/docker-haproxy/master.svg)](https://circleci.com/gh/million12/docker-haproxy)  (latest)  
+[![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=master)](https://travis-ci.org/million12/docker-haproxy)  
 [![GitHub Open Issues](https://img.shields.io/github/issues/million12/docker-haproxy.svg)](https://github.com/million12/docker-haproxy/issues)
 [![GitHub Stars](https://img.shields.io/github/stars/million12/docker-haproxy.svg)](https://github.com/million12/docker-haproxy)
 [![GitHub Forks](https://img.shields.io/github/forks/million12/docker-haproxy.svg)](https://github.com/million12/docker-haproxy)  
@@ -13,8 +13,29 @@
 HAProxy docker container [million12/haproxy](https://registry.hub.docker.com/u/million12/haproxy/) with ALPN and HTTP/2 support.
 
 ##### Build status (latest versions)
-* `million12/haproxy:latest` - [![CircleCI Build Status](https://img.shields.io/circleci/project/million12/docker-haproxy/master.svg)](https://circleci.com/gh/million12/docker-haproxy)  
-* `million12/haproxy:1.6.4` - [![CircleCI Build Status](https://img.shields.io/circleci/project/million12/docker-haproxy/1.6.4.svg)](https://circleci.com/gh/million12/docker-haproxy)  
+
+* `latest` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=master)](https://travis-ci.org/million12/docker-haproxy)
+
+| 1.7.* | 1.6.* |
+|:-----:|:-----:|
+|       |       |
+|`1.7.5` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.7.5)](https://travis-ci.org/million12/docker-haproxy)|`1.6.12` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.6.12)](https://travis-ci.org/million12/docker-haproxy)|
+|`1.7.4` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.7.4)](https://travis-ci.org/million12/docker-haproxy)|`1.6.11` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.6.11)](https://travis-ci.org/million12/docker-haproxy)|
+|`1.7.3` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.7.3)](https://travis-ci.org/million12/docker-haproxy)|`1.6.10` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.6.10)](https://travis-ci.org/million12/docker-haproxy)|
+|`1.7.2` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.7.2)](https://travis-ci.org/million12/docker-haproxy)|`1.6.9` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.6.9)](https://travis-ci.org/million12/docker-haproxy)|
+|`1.7.1` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.7.1)](https://travis-ci.org/million12/docker-haproxy)|`1.6.8` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.6.8)](https://travis-ci.org/million12/docker-haproxy)|
+|`1.7.0` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.7.0)](https://travis-ci.org/million12/docker-haproxy)|`1.6.7` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.6.7)](https://travis-ci.org/million12/docker-haproxy)|
+|       |`1.6.6` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.6.6)](https://travis-ci.org/million12/docker-haproxy)|
+|       |`1.6.5` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.6.5)](https://travis-ci.org/million12/docker-haproxy)|
+|       |`1.6.4` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.6.4)](https://travis-ci.org/million12/docker-haproxy)|
+
+
+### Tags
+Please specify tag when deploying for specific version.  
+Example:  
+
+`million12/haproxy:latest`  
+`million12/haproxy:1.6.4`
 
 # Features
 
