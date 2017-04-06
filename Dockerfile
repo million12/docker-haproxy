@@ -11,7 +11,7 @@ RUN \
   yum install -y inotify-tools wget tar gzip make gcc perl pcre-devel zlib-devel && \
 
   `# Install newest openssl...` \
-  wget -O /tmp/openssl.tgz https://www.openssl.org/source/openssl-1.1.0e.tar.gz && \
+  wget -O /tmp/openssl.tgz https://www.openssl.org/source/openssl-1.0.2-latest.tar.gz && \
   tar -zxf /tmp/openssl.tgz -C /tmp && \
   cd /tmp/openssl-* && \
   ./config --prefix=/usr \
