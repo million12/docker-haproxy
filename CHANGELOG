@@ -1,3 +1,128 @@
+
+2017/04/04 : 1.6.12
+    - DOC: Add timings events schemas
+    - BUG/MINOR: option prefer-last-server must be ignored in some case
+    - BUG/MINOR: sample-fetches/stick-tables: bad type for the sample fetches sc*_get_gpt0
+    - BUG/MAJOR: channel: Fix the definition order of channel analyzers
+    - BUG/MINOR: config: emit a warning if http-reuse is enabled with incompatible options
+    - BUG/MINOR: tools: fix off-by-one in port size check
+    - BUG/MEDIUM: server: consider AF_UNSPEC as a valid address family
+    - MINOR: proto_http.c 502 error txt typo.
+    - DOC: add deprecation notice to "block"
+    - BUG/MEDIUM: tcp: don't poll for write when connect() succeeds
+    - BUG/MINOR: unix: fix connect's polling in case no data are scheduled
+    - BUG/MINOR: lua: Map.end are not reliable because "end" is a reserved keyword
+    - MINOR: chunks: implement a simple dynamic allocator for trash buffers
+    - BUG/MEDIUM: http: prevent redirect from overwriting a buffer
+    - BUG/MEDIUM: http: Prevent replace-header from overwriting a buffer
+    - BUG/MINOR: http: Return an error when a replace-header rule failed on the response
+    - BUG/MINOR: sendmail: The return of vsnprintf is not cleanly tested
+    - BUG/MAJOR: lua segmentation fault when the request is like 'GET ?arg=val HTTP/1.1'
+    - BUG/MAJOR: connection: update CO_FL_CONNECTED before calling the data layer
+    - BUG/MAJOR: stream-int: do not depend on connection flags to detect connection
+    - BUG/MEDIUM: connection: ensure to always report the end of handshakes
+    - BUG/MEDIUM: listener: do not try to rebind another process' socket
+    - BUG/MEDIUM: stream: fix client-fin/server-fin handling
+    - BUG/MEDIUM: tcp: don't require privileges to bind to device
+    - BUG/MEDIUM: config: reject anything but "if" or "unless" after a use-backend rule
+    - BUG/MINOR: checks: attempt clean shutw for SSL check
+    - MINOR: fd: add a new flag HAP_POLL_F_RDHUP to struct poller
+    - BUG/MINOR: raw_sock: always perfom the last recv if RDHUP is not available
+    - BUG/MINOR: cfgparse: loop in tracked servers lists not detected by check_config_validity().
+    - BUG: payload: fix payload not retrieving arbitrary lengths
+    - MINOR: server: irrelevant error message with 'default-server' config file keyword.
+    - MINOR: config: warn when some HTTP rules are used in a TCP proxy
+    - MINOR: doc: 2.4. Examples should be 2.5. Examples
+    - DOC/MINOR: Fix typos in proxy protocol doc
+    - DOC: Protocol doc: add checksum, TLV type ranges
+    - DOC: Protocol doc: add SSL TLVs, rename CHECKSUM
+    - DOC: Protocol doc: add noop TLV
+    - MINOR: doc: fix use-server example (imap vs mail)
+    - MINOR: dns: give ability to dns_init_resolvers() to close a socket when requested
+    - BUG/MAJOR: dns: restart sockets after fork()
+    - BUG/MEDIUM: peers: fix buffer overflow control in intdecode.
+    - BUG/MEDIUM: buffers: Fix how input/output data are injected into buffers
+    - DOC: fix parenthesis and add missing "Example" tags
+    - DOC: log-format/tcplog/httplog update
+    - DOC: Spelling fixes
+    - DOC: update the contributing file
+
+2016/12/25 : 1.6.11
+    - BUILD: contrib: fix ip6range build on Centos 7
+    - BUG/MINOR: cli: fix pointer size when reporting data/transport layer name
+    - BUG/MINOR: cli: dequeue from the proxy when changing a maxconn
+    - BUG/MINOR: cli: wake up the CLI's task after a timeout update
+    - BUG/MINOR: freq-ctr: make swrate_add() support larger values
+    - BUG/MEDIUM: proxy: return "none" and "unknown" for unknown LB algos
+    - BUG/MAJOR: stream: fix session abort on resource shortage
+    - BUG/MINOR: http: don't send an extra CRLF after a Set-Cookie in a redirect
+    - BUG/MEDIUM: variables: some variable name can hide another ones
+    - BUG/MINOR: cli: be sure to always warn the cli applet when input buffer is full
+    - MINOR: applet: Count number of (active) applets
+    - MINOR: task: Rename run_queue and run_queue_cur counters
+    - BUG/MEDIUM: stream: Save unprocessed events for a stream
+    - BUG/MAJOR: Fix how the list of entities waiting for a buffer is handled
+    - BUG/MEDIUM: lua: In some case, the return of sample-fetches is ignored (2)
+    - BUG/MINOR: stream-int: automatically release SI_FL_WAIT_DATA on SHUTW_NOW
+    - DOC: lua: section declared twice
+    - DOC: fix small typo in fe_id (backend instead of frontend)
+    - BUG/MINOR: lua: memory leak executing tasks
+    - BUG/MEDIUM: ssl: properly reset the reused_sess during a forced handshake
+    - BUG/MEDIUM: ssl: avoid double free when releasing bind_confs
+    - BUG/MINOR: backend: nbsrv() should return 0 if backend is disabled
+    - BUG/MEDIUM: ssl: for a handshake when server-side SNI changes
+    - BUG/MINOR: systemd: potential zombie processes
+
+2016/11/20 : 1.6.10
+    - BUG/MINOR: Fix OSX compilation errors
+    - BUG/MINOR: displayed PCRE version is running release
+    - MINOR: show Built with PCRE version
+    - MINOR: show Running on zlib version
+    - MINOR: Add fe_req_rate sample fetch
+    - MEDIUM: make SO_REUSEPORT configurable
+    - BUG/MINOR: vars: use sess and not s->sess in action_store()
+    - BUG/MINOR: vars: make smp_fetch_var() more robust against misuses
+    - BUG/MINOR: vars: smp_fetch_var() doesn't depend on HTTP but on the session
+    - BUG/MINOR: ssl: Check malloc return code
+    - BUG/MINOR: ssl: prevent multiple entries for the same certificate
+    - BUG/MINOR: systemd: make the wrapper return a non-null status code on error
+    - BUG/MINOR: systemd: always restore signals before execve()
+    - BUG/MINOR: systemd: check return value of calloc()
+    - MINOR: systemd: report it when execve() fails
+    - BUG/MEDIUM: systemd: let the wrapper know that haproxy has completed or failed
+    - BUILD: protocol: fix some build errors on OpenBSD
+    - BUILD: log: iovec requires to include sys/uio.h on OpenBSD
+    - BUILD: tcp: do not include netinet/ip.h for IP_TTL
+    - BUILD: checks: remove the last strcat and eliminate a warning on OpenBSD
+    - BUILD: poll: remove unused hap_fd_isset() which causes a warning with clang
+    - MINOR: cfgparse: few memory leaks fixes.
+    - MINOR: build: Allow linking to device-atlas library file
+    - DOC: Fix typo in description of `-st` parameter in man page
+    - BUG/MEDIUM: peers: on shutdown, wake up the appctx, not the stream
+    - BUG/MEDIUM: peers: fix use after free in peer_session_create()
+    - BUG/MEDIUM: systemd-wrapper: return correct exit codes
+    - BUG/MEDIUM: srv-state: properly restore the DRAIN state
+    - BUG/MINOR: srv-state: allow to have both CMAINT and FDRAIN flags
+    - BUG/MEDIUM: servers: properly propagate the maintenance states during startup
+    - BUG: vars: Fix 'set-var' converter because of a typo
+    - BUG/MEDIUM: channel: bad unlikely macro
+    - CLEANUP: lua: move comment
+    - CLEANUP: lua: control executed twice
+    - CLEANUP: ssl: Fix bind keywords name in comments
+    - DOC: ssl: Use correct wording for ca-sign-pass
+    - BUG/MINOR: stick-table: handle out-of-memory condition gracefully
+    - BUG/MEDIUM: connection: check the control layer before stopping polling
+    - BUG/MEDIUM: stick-table: fix regression caused by recent fix for out-of-memory
+    - CONTRIB: initiate a debugging suite to make debugging easier
+    - BUG/MINOR: cli: properly decrement ref count on tables during failed dumps
+    - BUG/MEDIUM: lua: In some case, the return of sample-fetche is ignored
+
+2016/08/30 : 1.6.9
+    - DOC: Updated 51Degrees readme.
+    - BUG/MAJOR: stream: properly mark the server address as unset on connect retry
+    - BUG/MINOR: payload: fix SSLv2 version parser
+    - MINOR: cli: allow the semi-colon to be escaped on the CLI
+
 2016/08/14 : 1.6.8
     - BUG/MEDIUM: lua: the function txn_done() from sample fetches can crash
     - BUG/MEDIUM: lua: the function txn_done() from action wrapper can crash
