@@ -1,3 +1,24 @@
+2016/08/14 : 1.6.8
+    - BUG/MEDIUM: lua: the function txn_done() from sample fetches can crash
+    - BUG/MEDIUM: lua: the function txn_done() from action wrapper can crash
+    - BUG/MINOR: peers: Fix peers data decoding issue
+    - DOC: lua: remove old functions
+    - BUG/MEDIUM: lua: somme HTTP manipulation functions are called without valid requests
+    - BUG/MEDIUM: stream-int: completely detach connection on connect error
+    - DOC: minor typo fixes to improve HTML parsing by haproxy-dconv
+    - BUILD: make proto_tcp.c compatible with musl library
+    - BUG/MAJOR: compression: initialize avail_in/next_in even during flush
+    - BUG/MEDIUM: samples: make smp_dup() always duplicate the sample
+    - MINOR: sample: implement smp_is_safe() and smp_make_safe()
+    - MINOR: sample: provide smp_is_rw() and smp_make_rw()
+    - BUG/MAJOR: server: the "sni" directive could randomly cause trouble
+    - BUG/MEDIUM: stick-tables: do not fail on string keys with no allocated size
+    - BUG/MEDIUM: stick-table: properly convert binary samples to keys
+    - MINOR: sample: use smp_make_rw() in upper/lower converters
+    - BUG/MINOR: peers: some updates are pushed twice after a resync.
+    - BUG/MINOR: peers: empty chunks after a resync.
+    - BUG/MAJOR: stick-counters: possible crash when using sc_trackers with wrong table
+
 2016/07/13 : 1.6.7
     - MINOR: new function my_realloc2 = realloc + free upon failure
     - CLEANUP: fixed some usages of realloc leading to memory leak
