@@ -1,3 +1,252 @@
+2017/04/03 : 1.7.5
+    - BUG/MEDIUM: peers: fix buffer overflow control in intdecode.
+    - BUG/MEDIUM: buffers: Fix how input/output data are injected into buffers
+    - BUG/MEDIUM: http: Fix blocked HTTP/1.0 responses when compression is enabled
+    - BUG/MINOR: filters: Don't force the stream's wakeup when we wait in flt_end_analyze
+    - DOC: fix parenthesis and add missing "Example" tags
+    - DOC: update the contributing file
+    - DOC: log-format/tcplog/httplog update
+    - MINOR: config parsing: add warning when log-format/tcplog/httplog is overriden in "defaults" sections
+
+2017/03/27 : 1.7.4
+    - MINOR: config: warn when some HTTP rules are used in a TCP proxy
+    - BUG/MINOR: spoe: Fix soft stop handler using a specific id for spoe filters
+    - BUG/MINOR: spoe: Fix parsing of arguments in spoe-message section
+    - BUG/MEDIUM: ssl: Clear OpenSSL error stack after trying to parse OCSP file
+    - BUG/MEDIUM: cli: Prevent double free in CLI ACL lookup
+    - BUG/MINOR: Fix "get map <map> <value>" CLI command
+    - BUG/MAJOR: connection: update CO_FL_CONNECTED before calling the data layer
+    - BUG/MEDIUM: ssl: switchctx should not return SSL_TLSEXT_ERR_ALERT_WARNING
+    - BUG/MINOR: checks: attempt clean shutw for SSL check
+    - CONTRIB: tcploop: add limits.h to fix build issue with some compilers
+    - CONTRIB: tcploop: make it build on FreeBSD
+    - CONTRIB: tcploop: fix time format to silence build warnings
+    - CONTRIB: tcploop: report action 'K' (kill) in usage message
+    - CONTRIB: tcploop: fix connect's address length
+    - CONTRIB: tcploop: use the trash instead of NULL for recv()
+    - BUG/MEDIUM: listener: do not try to rebind another process' socket
+    - BUG/MEDIUM: filters: Fix channels synchronization in flt_end_analyze
+    - BUG/MAJOR: stream-int: do not depend on connection flags to detect connection
+    - BUG/MEDIUM: connection: ensure to always report the end of handshakes
+    - BUG: payload: fix payload not retrieving arbitrary lengths
+    - BUG/MAJOR: http: fix typo in http_apply_redirect_rule
+    - MINOR: doc: 2.4. Examples should be 2.5. Examples
+    - BUG/MEDIUM: stream: fix client-fin/server-fin handling
+    - MINOR: fd: add a new flag HAP_POLL_F_RDHUP to struct poller
+    - BUG/MINOR: raw_sock: always perfom the last recv if RDHUP is not available
+    - DOC/MINOR: Fix typos in proxy protocol doc
+    - DOC: Protocol doc: add checksum, TLV type ranges
+    - DOC: Protocol doc: add SSL TLVs, rename CHECKSUM
+    - DOC: Protocol doc: add noop TLV
+    - MEDIUM: global: add a 'hard-stop-after' option to cap the soft-stop time
+    - BUG/MINOR: cfgparse: loop in tracked servers lists not detected by check_config_validity().
+    - MINOR: server: irrelevant error message with 'default-server' config file keyword.
+    - MINOR: doc: fix use-server example (imap vs mail)
+    - BUG/MEDIUM: tcp: don't require privileges to bind to device
+    - BUILD: make the release script use shortlog for the final changelog
+    - BUILD: scripts: fix typo in announce-release error message
+
+2017/02/28 : 1.7.3
+    - BUG/MINOR: stream: Fix how backend-specific analyzers are set on a stream
+    - BUILD: ssl: fix build on OpenSSL 1.0.0
+    - BUILD: ssl: silence a warning reported for ERR_remove_state()
+    - BUILD: ssl: eliminate warning with OpenSSL 1.1.0 regarding RAND_pseudo_bytes()
+    - BUG/MEDIUM: tcp: don't poll for write when connect() succeeds
+    - BUG/MINOR: unix: fix connect's polling in case no data are scheduled
+    - DOC: lua: improve links
+    - BUG/MINOR: lua: Map.end are not reliable because "end" is a reserved keyword
+    - MINOR: dns: give ability to dns_init_resolvers() to close a socket when requested
+    - BUG/MAJOR: dns: restart sockets after fork()
+    - MINOR: chunks: implement a simple dynamic allocator for trash buffers
+    - BUG/MEDIUM: http: prevent redirect from overwriting a buffer
+    - BUG/MEDIUM: filters: Do not truncate HTTP response when body length is undefined
+    - BUG/MEDIUM: http: Prevent replace-header from overwriting a buffer
+    - BUG/MINOR: http: Return an error when a replace-header rule failed on the response
+    - BUG/MINOR: sendmail: The return of vsnprintf is not cleanly tested
+    - BUG/MAJOR: lua segmentation fault when the request is like 'GET ?arg=val HTTP/1.1'
+    - BUG/MEDIUM: config: reject anything but "if" or "unless" after a use-backend rule
+    - MINOR: http: don't close when redirect location doesn't start with "/"
+
+2017/01/13 : 1.7.2
+    - BUG/MEDIUM: lua: In some case, the return of sample-fetches is ignored (2)
+    - SCRIPTS: git-show-backports: fix a harmless typo
+    - SCRIPTS: git-show-backports: add -H to use the hash of the commit message
+    - BUG/MINOR: stream-int: automatically release SI_FL_WAIT_DATA on SHUTW_NOW
+    - DOC: lua: documentation about time parser functions
+    - DOC: lua: section declared twice
+    - BUG/MINOR: lua/cli: bad error message
+    - DOC: fix small typo in fe_id (backend instead of frontend)
+    - BUG/MINOR: Fix the sending function in Lua's cosocket
+    - BUG/MINOR: lua: memory leak executing tasks
+    - BUG/MINOR: lua: bad return code
+    - BUG/MEDIUM: ssl: properly reset the reused_sess during a forced handshake
+    - BUG/MEDIUM: ssl: avoid double free when releasing bind_confs
+    - BUG/MINOR: stats: fix be/sessions/current out in typed stats
+    - BUG/MINOR: backend: nbsrv() should return 0 if backend is disabled
+    - BUG/MEDIUM: ssl: for a handshake when server-side SNI changes
+    - BUG/MINOR: systemd: potential zombie processes
+    - DOC: Add timings events schemas
+    - BUILD: lua: build failed on FreeBSD.
+    - BUG/MINOR: option prefer-last-server must be ignored in some case
+    - MINOR: stats: Support "select all" for backend actions
+    - BUG/MINOR: sample-fetches/stick-tables: bad type for the sample fetches sc*_get_gpt0
+    - BUG/MAJOR: channel: Fix the definition order of channel analyzers
+    - BUG/MINOR: http: report real parser state in error captures
+    - BUILD: scripts: automatically update the branch in version.h when releasing
+    - BUG/MAJOR: http: fix risk of getting invalid reports of bad requests
+    - MINOR: http: custom status reason.
+    - MINOR: connection: add sample fetch "fc_rcvd_proxy"
+    - BUG/MINOR: config: emit a warning if http-reuse is enabled with incompatible options
+    - BUG/MINOR: tools: fix off-by-one in port size check
+    - BUG/MEDIUM: server: consider AF_UNSPEC as a valid address family
+    - MEDIUM: server: split the address and the port into two different fields
+    - MINOR: tools: make str2sa_range() return the port in a separate argument
+    - MINOR: server: take the destination port from the port field, not the addr
+    - MEDIUM: server: disable protocol validations when the server doesn't resolve
+    - BUG/MEDIUM: tools: do not force an unresolved address to AF_INET:0.0.0.0
+    - BUG/MINOR: ssl: EVP_PKEY must be freed after X509_get_pubkey usage
+    - MINOR: proto_http.c 502 error txt typo.
+    - DOC: add deprecation notice to "block"
+    - BUG/MINOR: Reset errno variable before calling strtol(3)
+
+2016/12/13 : 1.7.1
+    - BUG/MEDIUM: proxy: return "none" and "unknown" for unknown LB algos
+    - BUG/MINOR: stats: make field_str() return an empty string on NULL
+    - DOC: Spelling fixes
+    - BUG/MEDIUM: http: Fix tunnel mode when the CONNECT method is used
+    - BUG/MINOR: http: Keep the same behavior between 1.6 and 1.7 for tunneled txn
+    - BUG/MINOR: filters: Protect args in macros HAS_DATA_FILTERS and IS_DATA_FILTER
+    - BUG/MINOR: filters: Invert evaluation order of HTTP_XFER_BODY and XFER_DATA analyzers
+    - BUG/MINOR: http: Call XFER_DATA analyzer when HTTP txn is switched in tunnel mode
+    - BUG/MAJOR: stream: fix session abort on resource shortage
+    - BUG/MINOR: cli: allow the backslash to be escaped on the CLI
+    - BUG/MEDIUM: cli: fix "show stat resolvers" and "show tls-keys"
+    - DOC: Fix map table's format
+    - DOC: Added 51Degrees conv and fetch functions to documentation.
+    - BUG/MINOR: http: don't send an extra CRLF after a Set-Cookie in a redirect
+    - DOC: mention that req_tot is for both frontends and backends
+    - BUG/MEDIUM: variables: some variable name can hide another ones
+    - BUG/MINOR: stats: fix be/sessions/max output in html stats
+    - MINOR: proxy: Add fe_name/be_name fetchers next to existing fe_id/be_id
+    - DOC: lua: Documentation about some entry missing
+    - MINOR: Do not forward the header "Expect: 100-continue" when the option http-buffer-request is set
+    - DOC: Add undocumented argument of the trace filter
+    - DOC: Fix some typo in SPOE documentation
+    - BUG/MINOR: cli: be sure to always warn the cli applet when input buffer is full
+    - MINOR: applet: Count number of (active) applets
+    - MINOR: task: Rename run_queue and run_queue_cur counters
+    - BUG/MEDIUM: stream: Save unprocessed events for a stream
+    - BUG/MAJOR: Fix how the list of entities waiting for a buffer is handled
+    - BUILD/MEDIUM: Fixing the build using LibreSSL
+
+2016/11/25 : 1.7.0
+    - SCRIPTS: make publish-release also copy the new SPOE doc
+    - BUILD: http: include types/sample.h in proto_http.h
+    - BUILD: debug/flags: remove test for SF_COMP_READY
+    - CONTRIB: debug/flags: add check for SF_ERR_CHK_PORT
+    - MINOR: lua: add function which return true if the channel is full.
+    - MINOR: lua: add ip addresses and network manipulation function
+    - CONTRIB: tcploop: scriptable TCP I/O for debugging purposes
+    - CONTRIB: tcploop: implement fork()
+    - CONTRIB: tcploop: implement logging when called with -v
+    - CONTRIB: tcploop: update the usage output
+    - CONTRIB: tcploop: support sending plain strings
+    - CONTRIB: tcploop: don't report failed send() or recv()
+    - CONTRIB: tcploop: add basic loops via a jump instruction
+    - BUG/MEDIUM: channel: bad unlikely macro
+    - CLEANUP: lua: move comment
+    - CLEANUP: lua: control executed twice
+    - BUG/MEDIUM: ssl: Store certificate filename in a variable
+    - BUG/MINOR: ssl: Print correct filename when error occurs reading OCSP
+    - CLEANUP: ssl: Remove goto after return dead code
+    - CLEANUP: ssl: Fix bind keywords name in comments
+    - DOC: ssl: Use correct wording for ca-sign-pass
+    - CLEANUP: lua: avoid directly calling getsockname/getpeername()
+    - BUG/MINOR: stick-table: handle out-of-memory condition gracefully
+    - MINOR: cli: add private pointer and release function
+    - MEDIUM: lua: Add cli handler for Lua
+    - BUG/MEDIUM: connection: check the control layer before stopping polling
+    - DEBUG: connection: mark the closed FDs with a value that is easier to detect
+    - BUG/MEDIUM: stick-table: fix regression caused by recent fix for out-of-memory
+    - BUG/MINOR: cli: properly decrement ref count on tables during failed dumps
+    - BUG/MEDIUM: lua: In some case, the return of sample-fetche is ignored
+    - MINOR: filters: Add check_timeouts callback to handle timers expiration on streams
+    - MINOR: spoe: Add 'timeout processing' option to limit time to process an event
+    - MINOR: spoe: Remove useless 'timeout ack' option
+    - MINOR: spoe: Add 'option continue-on-error' statement in spoe-agent section
+    - MINOR: spoe: Add "maxconnrate" and "maxerrrate" statements
+    - MINOR: spoe: Add "option set-on-error" statement
+    - MINOR: stats: correct documentation of process ID for typed output
+    - BUILD: contrib: fix ip6range build on Centos 7
+    - BUILD: fix build on Solaris 10/11
+    - BUG/MINOR: cli: fix pointer size when reporting data/transport layer name
+    - BUG/MINOR: cli: dequeue from the proxy when changing a maxconn
+    - BUG/MINOR: cli: wake up the CLI's task after a timeout update
+    - MINOR: connection: add a few functions to report the data and xprt layers' names
+    - MINOR: connection: add names for transport and data layers
+    - REORG: cli: split dumpstats.c in src/cli.c and src/stats.c
+    - REORG: cli: split dumpstats.h in stats.h and cli.h
+    - REORG: cli: move ssl CLI functions to ssl_sock.c
+    - REORG: cli: move map and acl code to map.c
+    - REORG: cli: move show stat resolvers to dns.c
+    - MINOR: cli: create new function cli_has_level() to validate permissions
+    - MINOR: server: create new function cli_find_server() to find a server
+    - MINOR: proxy: create new function cli_find_frontend() to find a frontend
+    - REORG: cli: move 'set server' to server.c
+    - REORG: cli: move 'show pools' to memory.c
+    - REORG: cli: move 'show servers' to proxy.c
+    - REORG: cli: move 'show sess' to stream.c
+    - REORG: cli: move 'show backend' to proxy.c
+    - REORG: cli: move get/set weight to server.c
+    - REORG: cli: move "show stat" to stats.c
+    - REORG: cli: move "show info" to stats.c
+    - REORG: cli: move dump_text(), dump_text_line(), and dump_binary() to standard.c
+    - REORG: cli: move table dump/clear/set to stick_table.c
+    - REORG: cli: move "show errors" out of cli.c
+    - REORG: cli: make "show env" also use the generic keyword registration
+    - REORG: cli: move "set timeout" to its own handler
+    - REORG: cli: move "clear counters" to stats.c
+    - REORG: cli: move "set maxconn global" to its own handler
+    - REORG: cli: move "set maxconn server" to server.c
+    - REORG: cli: move "set maxconn frontend" to proxy.c
+    - REORG: cli: move "shutdown sessions server" to stream.c
+    - REORG: cli: move "shutdown session" to stream.c
+    - REORG: cli: move "shutdown frontend" to proxy.c
+    - REORG: cli: move "{enable|disable} frontend" to proxy.c
+    - REORG: cli: move "{enable|disable} server" to server.c
+    - REORG: cli: move "{enable|disable} health" to server.c
+    - REORG: cli: move "{enable|disable} agent" to server.c
+    - REORG: cli: move the "set rate-limit" functions to their own parser
+    - CLEANUP: cli: rename STAT_CLI_* to CLI_ST_*
+    - CLEANUP: cli: simplify the request parser a little bit
+    - CLEANUP: cli: remove assignments to st0 and st2 in keyword parsers
+    - BUILD: server: remove a build warning introduced by latest series
+    - BUG/MINOR: log-format: uncatched memory allocation functions
+    - CLEANUP: log-format: useless file and line in json converter
+    - CLEANUP/MINOR: log-format: unexport functions parse_logformat_var_args() and parse_logformat_var()
+    - CLEANUP: log-format: fix return code of the function parse_logformat_var()
+    - CLEANUP: log-format: fix return code of function parse_logformat_var_args()
+    - CLEANUP: log-format: remove unused arguments
+    - MEDIUM: log-format: strict parsing and enable fail
+    - MEDIUM: log-format/conf: take into account the parse_logformat_string() return code
+    - BUILD: ssl: make the SSL layer build again with openssl 0.9.8
+    - BUILD: vars: remove a build warning on vars.c
+    - MINOR: lua: add utility function for check boolean argument
+    - MINOR: lua: Add tokenize function.
+    - BUG/MINOR: conf: calloc untested
+    - MINOR: http/conf: store the use_backend configuration file and line for logs
+    - MEDIUM: log-format: Use standard HAProxy log system to report errors
+    - CLEANUP: sample: report "converter" instead of "conv method" in error messages
+    - BUG: spoe: Fix parsing of SPOE actions in ACK frames
+    - MINOR: cli: make "show stat" support a proxy name
+    - MINOR: cli: make "show errors" support a proxy name
+    - MINOR: cli: make "show errors" capable of dumping only request or response
+    - BUG/MINOR: freq-ctr: make swrate_add() support larger values
+    - CLEANUP: counters: move from 3 types to 2 types
+    - CLEANUP: cfgparse: cascade the warnif_misplaced_* rules
+    - REORG: tcp-rules: move tcp rules processing to their own file
+    - REORG: stkctr: move all the stick counters processing to stick-tables.c
+    - DOC: update the roadmap file with the latest changes
 
 2017/04/04 : 1.6.12
     - DOC: Add timings events schemas

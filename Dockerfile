@@ -1,8 +1,8 @@
 FROM centos:centos7
 MAINTAINER Marcin Ryzycki marcin@m12.io, Przemyslaw Ozgo linux@ozgo.info
 
-ENV HAPROXY_MJR_VERSION=1.6
-ENV HAPROXY_VERSION=1.6.12
+ENV HAPROXY_MJR_VERSION=1.7
+ENV HAPROXY_VERSION=1.7.5
 
 RUN \
   yum install -y epel-release && \
