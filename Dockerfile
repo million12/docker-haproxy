@@ -8,7 +8,7 @@ RUN \
   yum install -y epel-release && \
   yum update -y && \
   `# Install build tools. Note: perl needed to compile openssl...` \
-  yum install -y inotify-tools wget tar gzip make gcc perl pcre-devel zlib-devel && \
+  yum install -y inotify-tools wget tar gzip make gcc perl pcre-devel zlib-devel iptables && \
   `# Install newest openssl...` \
   wget -O /tmp/openssl.tgz https://www.openssl.org/source/openssl-1.0.2-latest.tar.gz && \
   tar -zxf /tmp/openssl.tgz -C /tmp && \
