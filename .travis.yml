@@ -24,7 +24,7 @@ script:
   #
   # Test daemon mode (default settings)
   #
-  - docker run -d -p 8080:80 --name haproxy million12/haproxy && sleep 1
+  - docker run -d --cap-add NET_ADMIN -p 8080:80 --name haproxy million12/haproxy && sleep 1
   - curl -u admin:admin http://127.0.0.1:8080/admin?stats
   - docker rm -f haproxy || true
 
@@ -32,7 +32,7 @@ script:
   # Test providing custom HAProxy config
   # Test restarting after making changes in that config
   #
-  - docker run -d -p 8080:80 -v $(pwd)/container-files/etc/haproxy/haproxy.cfg:/my-haproxy.cfg -e HAPROXY_CONFIG=/my-haproxy.cfg --name haproxy million12/haproxy && sleep 5
+  - docker run -d --cap-add NET_ADMIN -p 8080:80 -v $(pwd)/container-files/etc/haproxy/haproxy.cfg:/my-haproxy.cfg -e HAPROXY_CONFIG=/my-haproxy.cfg --name haproxy million12/haproxy && sleep 5
   - docker logs -f haproxy > /tmp/docker-haproxy.log 2>&1 &
   - sleep 5
   # Test if HAProxy uses the provided alternative config
