@@ -56,16 +56,20 @@ Example:
 Default: `HAPROXY_CONFIG=/etc/haproxy/haproxy.cfg`  
 If you mount your config to different location, simply edit it.
 
+**HAPROXY_PORTS**
+Default: `HAPROXY_PORTS=80,443`
+If you listen to different ports, simply edit it.
+
 
 ## Usage
 
 ### Basic
 
-`docker run -ti -p 80:80 -p 443:443 million12/haproxy`
+`docker run -ti --cap-add NET_ADMIN -p 80:80 -p 443:443 million12/haproxy`
 
 ### Mount custom config , override some options
 
-`docker run -d -p 80:80 -v /my-haproxy.cfg:/etc/haproxy/haproxy.cfg million12/haproxy -n 10000`  
+`docker run -d --cap-add NET_ADMIN -p 80:80 -v /my-haproxy.cfg:/etc/haproxy/haproxy.cfg million12/haproxy -n 10000`  
 Note: in this case config is mounted to its default location, so you don't need to modify `HAPROXY_CONFIG` variable.
 
 ### Check version and build options

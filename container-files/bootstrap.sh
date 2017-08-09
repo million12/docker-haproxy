@@ -4,12 +4,18 @@ set -u
 
 # User params
 HAPROXY_CONFIG=${HAPROXY_CONFIG:="/etc/haproxy/haproxy.cfg"}
+HAPROXY_PORTS=${HAPROXY_PORTS:="80,443"}
 HAPROXY_USER_PARAMS=$@
 
 # Internal params
 HAPROXY_PID_FILE="/var/run/haproxy.pid"
 HAPROXY_CMD="/usr/local/sbin/haproxy -f ${HAPROXY_CONFIG} ${HAPROXY_USER_PARAMS} -D -p ${HAPROXY_PID_FILE}"
 HAPROXY_CHECK_CONFIG_CMD="/usr/local/sbin/haproxy -f ${HAPROXY_CONFIG} -c"
+
+# Iptable commands
+LIST_IPTABLES="iptables --list"
+ENABLE_SYN_DROP="iptables -I INPUT -p tcp -m multiport --dport $HAPROXY_PORTS --syn -j DROP"
+DISABLE_SYN_DROP="iptables -D INPUT -p tcp -m multiport --dport $HAPROXY_PORTS --syn -j DROP"
 
 
 #######################################
@@ -32,6 +38,14 @@ print_config() {
   printf '=%.0s' {1..100} && echo
 }
 
+# Check iptables rules modification capabilities
+$LIST_IPTABLES > /dev/null 2>&1
+# Exit immidiately in case of any errors
+if [[ $? != 0 ]]; then
+    EXIT_CODE=$?;
+    echo "Please enable NET_ADMIN capabilities by passing '--cap-add NET_ADMIN' parameter to docker run command";
+    exit $EXIT_CODE;
+fi
 
 # Launch HAProxy.
 # In the default attached haproxy.cfg `web.server` host is used for back-end nodes.
@@ -53,7 +67,10 @@ while inotifywait -q -e create,delete,modify,attrib $HAPROXY_CONFIG /etc/hosts; 
   if [ -f $HAPROXY_PID_FILE ]; then
     log "Restarting HAProxy due to config changes..." && print_config
     $HAPROXY_CHECK_CONFIG_CMD
+    $ENABLE_SYN_DROP
+    sleep 0.2
     $HAPROXY_CMD -sf $(cat $HAPROXY_PID_FILE)
+    $DISABLE_SYN_DROP
     log "HAProxy restarted, pid $(cat $HAPROXY_PID_FILE)." && log
   else
     log "Error: no $HAPROXY_PID_FILE present, HAProxy exited."

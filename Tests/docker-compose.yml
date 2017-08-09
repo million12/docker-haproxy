@@ -10,6 +10,8 @@ nginx:
 
 # Launch HAProxy
 haproxy:
+  cap_add:
+    - NET_ADMIN
   image: million12/haproxy
   ports:
     - '8080:80'
