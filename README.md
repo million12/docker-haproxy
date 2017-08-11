@@ -12,24 +12,6 @@
 
 HAProxy docker container [million12/haproxy](https://registry.hub.docker.com/u/million12/haproxy/) with ALPN and HTTP/2 support.
 
-##### Build status (latest versions)
-
-* `latest` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=master)](https://travis-ci.org/million12/docker-haproxy)
-
-| 1.7.* | 1.6.* |
-|:-----:|:-----:|
-|       |       |
-|`1.7.5` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.7.5)](https://travis-ci.org/million12/docker-haproxy)|`1.6.12` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.6.12)](https://travis-ci.org/million12/docker-haproxy)|
-|`1.7.4` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.7.4)](https://travis-ci.org/million12/docker-haproxy)|`1.6.11` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.6.11)](https://travis-ci.org/million12/docker-haproxy)|
-|`1.7.3` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.7.3)](https://travis-ci.org/million12/docker-haproxy)|`1.6.10` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.6.10)](https://travis-ci.org/million12/docker-haproxy)|
-|`1.7.2` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.7.2)](https://travis-ci.org/million12/docker-haproxy)|`1.6.9` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.6.9)](https://travis-ci.org/million12/docker-haproxy)|
-|`1.7.1` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.7.1)](https://travis-ci.org/million12/docker-haproxy)|`1.6.8` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.6.8)](https://travis-ci.org/million12/docker-haproxy)|
-|`1.7.0` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.7.0)](https://travis-ci.org/million12/docker-haproxy)|`1.6.7` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.6.7)](https://travis-ci.org/million12/docker-haproxy)|
-|       |`1.6.6` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.6.6)](https://travis-ci.org/million12/docker-haproxy)|
-|       |`1.6.5` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.6.5)](https://travis-ci.org/million12/docker-haproxy)|
-|       |`1.6.4` - [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=1.6.4)](https://travis-ci.org/million12/docker-haproxy)|
-
-
 ### Tags
 Please specify tag when deploying for specific version.  
 Example:  
@@ -44,7 +26,7 @@ Example:
 * Ability to **provide any arguments to haproxy** process  
   Any extra parameters provided to `docker run` will be passed directly to `haproxy` command.  
   For example, if you run `docker run [run options] million12/haproxy -n 1000` you pass `-n 1000` to haproxy daemon.
-* Pretty **lightweight**, only ~290M (with OpenSSL and HAProxy compiled from source).
+* Pretty **lightweight**, only ~100M (with OpenSSL and HAProxy compiled from source).
 * **Default [haproxy.cfg](container-files/etc/haproxy/haproxy.cfg) provided** for demonstration purposes. You can easily mount your own or point to different location using `HAPROXY_CONFIG` env.
 * **Auto restart when config changes**  
   This container comes with inotify to monitor changes in HAProxy config and **reload** HAProxy daemon. The reload is done in a way that no connection is lost.
