@@ -1,7 +1,7 @@
 FROM centos:centos7
 
 ENV HAPROXY_MJR_VERSION=1.7
-ENV HAPROXY_VERSION=1.7.8
+ENV HAPROXY_VERSION=1.7.9
 
 RUN \
   yum install -y epel-release && \
