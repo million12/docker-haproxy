@@ -5,6 +5,8 @@ set -u
 # User params
 HAPROXY_CONFIG=${HAPROXY_CONFIG:="/etc/haproxy/haproxy.cfg"}
 HAPROXY_PORTS=${HAPROXY_PORTS:="80,443"}
+HAPROXY_PRE_RESTART_CMD={HAPROXY_PRE_RESTART_CMD:=""}
+HAPROXY_POST_RESTART_CMD={HAPROXY_POST_RESTART_CMD:=""}
 HAPROXY_USER_PARAMS=$@
 
 # Internal params
@@ -69,7 +71,12 @@ while inotifywait -q -e create,delete,modify,attrib $HAPROXY_CONFIG /etc/hosts; 
     $HAPROXY_CHECK_CONFIG_CMD
     $ENABLE_SYN_DROP
     sleep 0.2
+    log "Executing pre-restart hook..."
+    $HAPROXY_PRE_RESTART_CMD
+    log "Restarting haproxy..."
     $HAPROXY_CMD -sf $(cat $HAPROXY_PID_FILE)
+    log "Executing post-restart hook..."
+    $HAPROXY_POST_RESTART_CMD
     $DISABLE_SYN_DROP
     log "HAProxy restarted, pid $(cat $HAPROXY_PID_FILE)." && log
   else

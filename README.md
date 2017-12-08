@@ -39,8 +39,14 @@ Default: `HAPROXY_CONFIG=/etc/haproxy/haproxy.cfg`
 If you mount your config to different location, simply edit it.
 
 **HAPROXY_PORTS**
-Default: `HAPROXY_PORTS=80,443`
+Default: `HAPROXY_PORTS=80,443`  
 If you listen to different ports, simply edit it.
+
+**HAPROXY_PRE_RESTART_CMD**
+Command to execute before restarting haproxy
+
+**HAPROXY_POST_RESTART_CMD**
+Command to execute after successfully restarting haproxy
 
 
 ## Usage
