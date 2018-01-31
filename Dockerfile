@@ -1,7 +1,11 @@
 FROM centos:centos7
 
-ENV HAPROXY_MJR_VERSION=1.7
-ENV HAPROXY_VERSION=1.7.9
+ENV   HAPROXY_MJR_VERSION=1.7 \
+      HAPROXY_VERSION=1.7.9 \
+      HAPROXY_CONFIG='/etc/haproxy/haproxy.cfg' \
+      HAPROXY_ADDITIONAL_CONFIG='' \
+      HAPROXY_PRE_RESTART_CMD='' \
+      HAPROXY_POST_RESTART_CMD=''
 
 RUN \
   yum install -y epel-release && \
@@ -38,12 +42,8 @@ RUN \
   cat /etc/ssl/dummy.crt /etc/ssl/dummy.key > /etc/ssl/dummy.pem && \
   `# Clean up: build tools...` \
   yum remove -y make gcc pcre-devel && \
-  yum clean all
+  yum clean all && rm -rf /var/cache/yum
 
 COPY container-files /
-
-ENV HAPROXY_CONFIG /etc/haproxy/haproxy.cfg
-
-EXPOSE 80 443
 
 ENTRYPOINT ["/bootstrap.sh"]

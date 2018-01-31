@@ -4,9 +4,10 @@ set -u
 
 # User params
 HAPROXY_CONFIG=${HAPROXY_CONFIG:="/etc/haproxy/haproxy.cfg"}
+HAPROXY_ADDITIONAL_CONFIG=${HAPROXY_ADDITIONAL_CONFIG:=""}
 HAPROXY_PORTS=${HAPROXY_PORTS:="80,443"}
-HAPROXY_PRE_RESTART_CMD={HAPROXY_PRE_RESTART_CMD:=""}
-HAPROXY_POST_RESTART_CMD={HAPROXY_POST_RESTART_CMD:=""}
+HAPROXY_PRE_RESTART_CMD=${HAPROXY_PRE_RESTART_CMD:=""}
+HAPROXY_POST_RESTART_CMD=${HAPROXY_POST_RESTART_CMD:=""}
 HAPROXY_USER_PARAMS=$@
 
 # Internal params
@@ -62,10 +63,9 @@ $HAPROXY_CMD
 if [[ $? != 0 ]] || test -t 0; then exit $?; fi
 log "HAProxy started with $HAPROXY_CONFIG config, pid $(cat $HAPROXY_PID_FILE)." && log
 
-
 # Check if config has changed
 # Note: also monitor /etc/hosts where the new back-end hosts might be provided.
-while inotifywait -q -e create,delete,modify,attrib $HAPROXY_CONFIG /etc/hosts; do
+while inotifywait -q -e create,delete,modify,attrib /etc/hosts $HAPROXY_CONFIG $HAPROXY_ADDITIONAL_CONFIG; do
   if [ -f $HAPROXY_PID_FILE ]; then
     log "Restarting HAProxy due to config changes..." && print_config
     $HAPROXY_CHECK_CONFIG_CMD
