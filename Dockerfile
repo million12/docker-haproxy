@@ -1,7 +1,7 @@
 FROM centos:centos7
 
 ENV   HAPROXY_MJR_VERSION=1.7 \
-      HAPROXY_VERSION=1.7.9 \
+      HAPROXY_VERSION=1.7.10 \
       HAPROXY_CONFIG='/etc/haproxy/haproxy.cfg' \
       HAPROXY_ADDITIONAL_CONFIG='' \
       HAPROXY_PRE_RESTART_CMD='' \
