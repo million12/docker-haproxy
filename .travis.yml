@@ -76,10 +76,15 @@ jobs:
         - openssl s_client -connect haproxy:8443 -nextprotoneg ''
         - openssl s_client -connect haproxy:8443 -nextprotoneg '' | grep 'Secure Renegotiation IS supported'
         - openssl s_client -connect haproxy:8443 -nextprotoneg '' | grep 'Protocol' | grep TLSv1.2
-
-    - stage: deploy
-      if: branch = master
+      if: branch = develop
       script:
         - docker login -u $DOCKER_USER -p $DOCKER_PASS
-        - export RELEASE=$(grep "HAPROXY_VERSION=" Dockerfile | sed 's|^.*=||g' |awk '{print $1}'); docker push million12/haproxy:$RELEASE
-        - docker push million12/haproxy:latest
+        - docker tag million12/haproxy:latest million12/haproxy:develop
+        - docker push million12/haproxy:develop
+    #
+    # - stage: deploy
+    #   if: branch = master
+    #   script:
+    #     - docker login -u $DOCKER_USER -p $DOCKER_PASS
+    #     - export RELEASE=$(grep "HAPROXY_VERSION=" Dockerfile | sed 's|^.*=||g' |awk '{print $1}'); docker push million12/haproxy:$RELEASE
+    #     - docker push million12/haproxy:latest
