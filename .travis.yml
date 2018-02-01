@@ -88,7 +88,7 @@ jobs:
         - docker login -u $DOCKER_USER -p $DOCKER_PASS
         - docker pull million12/haproxy:stage
         - docker tag million12/haproxy:stage million12/haproxy:latest
-        - export RELEASE=$(grep "HAPROXY_VERSION=" Dockerfile | sed 's|^.*=||g' |awk '{print $1}'); docker tag million12/haproxy:stage million12/haproxy:latest:$RELEASE
+        - export RELEASE=$(grep "HAPROXY_VERSION=" Dockerfile | sed 's|^.*=||g' |awk '{print $1}'); docker tag million12/haproxy:stage million12/haproxy:$RELEASE
         - docker push million12/haproxy:latest
         - export RELEASE=$(grep "HAPROXY_VERSION=" Dockerfile | sed 's|^.*=||g' |awk '{print $1}'); docker push million12/haproxy:$RELEASE
         - docker push million12/haproxy:latest

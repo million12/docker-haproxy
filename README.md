@@ -72,7 +72,7 @@ Note: in this case config is mounted to its default location, so you don't need 
 docker run -d \
   --cap-add NET_ADMIN \
   -p 80:80 \
-  -e HAPROXY_ADDITIONAL_CONFIG='/etc/haproxy/custom1 /etc/haproxy/custom2'
+  -e HAPROXY_ADDITIONAL_CONFIG='/etc/haproxy/custom1 /etc/haproxy/custom2' \
   million12/haproxy
 ```
 
