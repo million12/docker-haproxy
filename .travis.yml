@@ -6,10 +6,6 @@ addons:
     - nginx
     - haproxy
 
-before_install:
-  - docker --version
-  - docker pull million12/nginx # used in Tests/docker-compose.yml
-
 jobs:
   include:
     - stage: build&test
