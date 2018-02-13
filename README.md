@@ -17,7 +17,7 @@ Please specify tag when deploying for specific version.
 Example:  
 
 `million12/haproxy:latest`  
-`million12/haproxy:1.7.9`
+`million12/haproxy:1.8.4`
 
 # Features
 
