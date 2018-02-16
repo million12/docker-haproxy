@@ -1,14 +1,14 @@
 # HAProxy Load Balancer
-[![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=master)](https://travis-ci.org/million12/docker-haproxy)  
-[![GitHub Open Issues](https://img.shields.io/github/issues/million12/docker-haproxy.svg)](https://github.com/million12/docker-haproxy/issues)
-[![GitHub Stars](https://img.shields.io/github/stars/million12/docker-haproxy.svg)](https://github.com/million12/docker-haproxy)
-[![GitHub Forks](https://img.shields.io/github/forks/million12/docker-haproxy.svg)](https://github.com/million12/docker-haproxy)  
-[![Stars on Docker Hub](https://img.shields.io/docker/stars/million12/haproxy.svg)](https://hub.docker.com/r/million12/haproxy)
-[![Pulls on Docker Hub](https://img.shields.io/docker/pulls/million12/haproxy.svg)](https://hub.docker.com/r/million12/haproxy)  
-[![](https://images.microbadger.com/badges/version/million12/haproxy.svg)](http://microbadger.com/images/million12/haproxy)
-[![](https://images.microbadger.com/badges/license/million12/haproxy.svg)](http://microbadger.com/images/million12/haproxy)
-[![](https://images.microbadger.com/badges/image/million12/haproxy.svg)](http://microbadger.com/images/million12/haproxy)
+[![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=master)](https://travis-ci.org/million12/docker-haproxy)
+[![GitHub Open Issues](https://img.shields.io/github/issues/million12/docker-haproxy.svg)](https://github.com/million12/docker-haproxy/issues)  
+[![Stars](https://img.shields.io/github/stars/million12/docker-haproxy.svg?style=social&label=Stars)]()
+[![Fork](https://img.shields.io/github/forks/million12/docker-haproxy.svg?style=social&label=Fork)]()  
+[![Release](https://img.shields.io/github/release/million12/docker-haproxy.svg)](http://microbadger.com/images/million12/haproxy.svg)  
 
+[![Docker build](http://dockeri.co/image/million12/haproxy)](https://hub.docker.com/r/million12/haproxy/)
+
+Felling like supporting me in my projects use donate button. Thank You!  
+[![](https://img.shields.io/badge/donate-PayPal-blue.svg)](https://www.paypal.me/POzgo)
 
 HAProxy docker container [million12/haproxy](https://registry.hub.docker.com/u/million12/haproxy/) with ALPN and HTTP/2 support.
 
@@ -17,7 +17,7 @@ Please specify tag when deploying for specific version.
 Example:  
 
 `million12/haproxy:latest`  
-`million12/haproxy:1.7.9`
+`million12/haproxy:1.8.4`
 
 # Features
 
@@ -31,28 +31,50 @@ Example:
 * **Auto restart when config changes**  
   This container comes with inotify to monitor changes in HAProxy config and **reload** HAProxy daemon. The reload is done in a way that no connection is lost.
 
-
 ## ENV variables
 
-**HAPROXY_CONFIG**  
-Default: `HAPROXY_CONFIG=/etc/haproxy/haproxy.cfg`  
-If you mount your config to different location, simply edit it.
-
-**HAPROXY_PORTS**
-Default: `HAPROXY_PORTS=80,443`
-If you listen to different ports, simply edit it.
-
+|Variable|Default Settings|Notes|
+|:--|:--|:--|
+|`HAPROXY_CONFIG`|`/etc/haproxy/haproxy.cfg`|If you mount your config to different location, simply edit it.|
+|`HAPROXY_PORTS`|`80,443`|Comma separated ports|
+|`HAPROXY_ADDITIONAL_CONFIG`|Empty|List of file that inotify should monitor for changes divided by space. Example below. Space separated|
+|`HAPROXY_PRE_RESTART_CMD`|Empty|Command to execute before restarting haproxy|
+|`HAPROXY_POST_RESTART_CMD`|Empty|Command to execute after successfully restarting haproxy|
 
 ## Usage
 
 ### Basic
 
-`docker run -ti --cap-add NET_ADMIN -p 80:80 -p 443:443 million12/haproxy`
+```bash
+docker run -ti \
+  --cap-add NET_ADMIN \
+  -p 80:80 \
+  -p 443:443 \
+  million12/haproxy
+```
 
 ### Mount custom config , override some options
 
-`docker run -d --cap-add NET_ADMIN -p 80:80 -v /my-haproxy.cfg:/etc/haproxy/haproxy.cfg million12/haproxy -n 10000`  
-Note: in this case config is mounted to its default location, so you don't need to modify `HAPROXY_CONFIG` variable.
+```bash
+docker run -d \
+  --cap-add NET_ADMIN \
+  -p 80:80 \
+  -v /my-haproxy.cfg:/etc/haproxy/haproxy.cfg \
+  million12/haproxy \
+  -n 10000
+```
+Note: in this case config is mounted to its default location, so you don't need to modify
+`HAPROXY_CONFIG` variable.
+
+### Monitor additional config files
+
+```bash
+docker run -d \
+  --cap-add NET_ADMIN \
+  -p 80:80 \
+  -e HAPROXY_ADDITIONAL_CONFIG='/etc/haproxy/custom1 /etc/haproxy/custom2' \
+  million12/haproxy
+```
 
 ### Check version and build options
 
