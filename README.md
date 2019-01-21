@@ -1,34 +1,34 @@
 # HAProxy Load Balancer
 [![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=master)](https://travis-ci.org/million12/docker-haproxy)
-[![GitHub Open Issues](https://img.shields.io/github/issues/million12/docker-haproxy.svg)](https://github.com/million12/docker-haproxy/issues)  
+[![GitHub Open Issues](https://img.shields.io/github/issues/million12/docker-haproxy.svg)](https://github.com/million12/docker-haproxy/issues)
 [![Stars](https://img.shields.io/github/stars/million12/docker-haproxy.svg?style=social&label=Stars)]()
-[![Fork](https://img.shields.io/github/forks/million12/docker-haproxy.svg?style=social&label=Fork)]()  
-[![Release](https://img.shields.io/github/release/million12/docker-haproxy.svg)](http://microbadger.com/images/million12/haproxy.svg)  
+[![Fork](https://img.shields.io/github/forks/million12/docker-haproxy.svg?style=social&label=Fork)]()
+[![Release](https://img.shields.io/github/release/million12/docker-haproxy.svg)](http://microbadger.com/images/million12/haproxy.svg)
 
 [![Docker build](http://dockeri.co/image/million12/haproxy)](https://hub.docker.com/r/million12/haproxy/)
 
-Felling like supporting me in my projects use donate button. Thank You!  
+Felling like supporting me in my projects use donate button. Thank You!
 [![](https://img.shields.io/badge/donate-PayPal-blue.svg)](https://www.paypal.me/POzgo)
 
 HAProxy docker container [million12/haproxy](https://registry.hub.docker.com/u/million12/haproxy/) with ALPN and HTTP/2 support.
 
 ### Tags
-Please specify tag when deploying for specific version.  
-Example:  
+Please specify tag when deploying for specific version.
+Example:
 
-`million12/haproxy:latest`  
-`million12/haproxy:1.8.4`
+`million12/haproxy:latest`
+`million12/haproxy:1.9.2`
 
 # Features
 
 * **Support for HTTP/2** with ALPN
 * CentOS 7 based
-* Ability to **provide any arguments to haproxy** process  
-  Any extra parameters provided to `docker run` will be passed directly to `haproxy` command.  
+* Ability to **provide any arguments to haproxy** process
+  Any extra parameters provided to `docker run` will be passed directly to `haproxy` command.
   For example, if you run `docker run [run options] million12/haproxy -n 1000` you pass `-n 1000` to haproxy daemon.
 * Pretty **lightweight**, only ~100M (with OpenSSL and HAProxy compiled from source).
 * **Default [haproxy.cfg](container-files/etc/haproxy/haproxy.cfg) provided** for demonstration purposes. You can easily mount your own or point to different location using `HAPROXY_CONFIG` env.
-* **Auto restart when config changes**  
+* **Auto restart when config changes**
   This container comes with inotify to monitor changes in HAProxy config and **reload** HAProxy daemon. The reload is done in a way that no connection is lost.
 
 ## ENV variables
@@ -85,5 +85,5 @@ The default URL for stats is `http://CONTAINER_IP/admin?stats` with username:pas
 
 ## Authors
 
-Author: Marcin ryzy Ryzycki (<marcin@m12.io>)  
+Author: Marcin ryzy Ryzycki (<marcin@m12.io>)
 Author: Przemyslaw Ozgo (<linux@ozgo.info>)
