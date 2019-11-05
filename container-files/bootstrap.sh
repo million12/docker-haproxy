@@ -75,7 +75,7 @@ while inotifywait -q -e create,delete,modify,attrib /etc/hosts $HAPROXY_CONFIG $
   log "Executing pre-restart hook..."
   $HAPROXY_PRE_RESTART_CMD
   log "Restarting haproxy..."
-  $HAPROXY_CMD -sf $HAPROXY_PID
+  $HAPROXY_CMD -sf $HAPROXY_PID &
   HAPROXY_PID=$!
   log "Got new PID: $HAPROXY_PID"
   log "Executing post-restart hook..."
