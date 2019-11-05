@@ -42,7 +42,7 @@ print_config() {
 
 # Check iptables rules modification capabilities
 $LIST_IPTABLES > /dev/null 2>&1
-# Exit immidiately in case of any errors
+# Exit immediately in case of any errors
 if [[ $? != 0 ]]; then
     EXIT_CODE=$?;
     echo "Please enable NET_ADMIN capabilities by passing '--cap-add NET_ADMIN' parameter to docker run command";
@@ -61,7 +61,7 @@ $HAPROXY_CMD &
 
 HAPROXY_PID=$!
 
-# Exit immidiately in case of any errors or when we have interactive terminal
+# Exit immediately in case of any errors or when we have interactive terminal
 if [[ $? != 0 ]] || test -t 0; then exit $?; fi
 log "HAProxy started with $HAPROXY_CONFIG config, pid $HAPROXY_PID." && log
 
@@ -77,6 +77,7 @@ while inotifywait -q -e create,delete,modify,attrib /etc/hosts $HAPROXY_CONFIG $
   log "Restarting haproxy..."
   $HAPROXY_CMD -sf $HAPROXY_PID
   HAPROXY_PID=$!
+  log "Got new PID: $HAPROXY_PID"
   log "Executing post-restart hook..."
   $HAPROXY_POST_RESTART_CMD
   $DISABLE_SYN_DROP
