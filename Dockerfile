@@ -1,7 +1,7 @@
 FROM centos:centos7
 
-ENV   HAPROXY_MJR_VERSION=1.9 \
-      HAPROXY_VERSION=1.9.2 \
+ENV   HAPROXY_MJR_VERSION=2.0 \
+      HAPROXY_VERSION=2.0.8 \
       HAPROXY_CONFIG='/etc/haproxy/haproxy.cfg' \
       HAPROXY_ADDITIONAL_CONFIG='' \
       HAPROXY_PRE_RESTART_CMD='' \
@@ -27,7 +27,7 @@ RUN \
   tar -zxvf /tmp/haproxy.tgz -C /tmp && \
   cd /tmp/haproxy-* && \
   make \
-    TARGET=linux2628 USE_LINUX_TPROXY=1 USE_ZLIB=1 USE_REGPARM=1 USE_PCRE=1 USE_PCRE_JIT=1 \
+    TARGET=linux-glibc USE_LINUX_TPROXY=1 USE_ZLIB=1 USE_REGPARM=1 USE_PCRE=1 USE_PCRE_JIT=1 \
     USE_OPENSSL=1 SSL_INC=/usr/include SSL_LIB=/usr/lib ADDLIB=-ldl \
     CFLAGS="-O2 -g -fno-strict-aliasing -DTCP_USER_TIMEOUT=18" && \
   make install && \

@@ -47,7 +47,6 @@ Example:
 
 ```bash
 docker run -ti \
-  --cap-add NET_ADMIN \
   -p 80:80 \
   -p 443:443 \
   million12/haproxy
@@ -57,7 +56,6 @@ docker run -ti \
 
 ```bash
 docker run -d \
-  --cap-add NET_ADMIN \
   -p 80:80 \
   -v /my-haproxy.cfg:/etc/haproxy/haproxy.cfg \
   million12/haproxy \
@@ -70,7 +68,6 @@ Note: in this case config is mounted to its default location, so you don't need 
 
 ```bash
 docker run -d \
-  --cap-add NET_ADMIN \
   -p 80:80 \
   -e HAPROXY_ADDITIONAL_CONFIG='/etc/haproxy/custom1 /etc/haproxy/custom2' \
   million12/haproxy
