@@ -1,5 +1,5 @@
 # HAProxy Load Balancer
-[![Build Status](https://travis-ci.org/million12/docker-haproxy.svg?branch=master)](https://travis-ci.org/million12/docker-haproxy)
+[![Build Status](https://jenkins.ozgo.info/jenkins/buildStatus/icon?job=gh-million12-docker-haproxy)](https://jenkins.ozgo.info/jenkins/view/GH%20-%20million12%20-%20Docker/job/gh-million12-docker-haproxy/)
 [![GitHub Open Issues](https://img.shields.io/github/issues/million12/docker-haproxy.svg)](https://github.com/million12/docker-haproxy/issues)
 [![Stars](https://img.shields.io/github/stars/million12/docker-haproxy.svg?style=social&label=Stars)]()
 [![Fork](https://img.shields.io/github/forks/million12/docker-haproxy.svg?style=social&label=Fork)]()
