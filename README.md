@@ -7,7 +7,7 @@ HAProxy Load Balancer
 [![Fork](https://img.shields.io/github/forks/million12/docker-haproxy.svg?style=social&label=Fork)](https://github.com/million12/docker-haproxy/network/members)  
 [![Release](https://img.shields.io/github/release/million12/docker-haproxy.svg)](http://microbadger.com/images/million12/haproxy.svg)
 
-[![Docker build](http://dockeri.co/image/million12/haproxy)](https://hub.docker.com/r/million12/haproxy/)
+[![Docker build](https://dockeri.co/image/million12/haproxy)](https://hub.docker.com/r/million12/haproxy/)
 
 Felling like supporting me in my projects use donate button. Thank You!  
 [![PayPal](https://img.shields.io/badge/donate-PayPal-blue.svg)](https://www.paypal.me/POzgo)
