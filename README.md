@@ -1,25 +1,28 @@
-# HAProxy Load Balancer
-[![Build Status](https://jenkins.ozgo.info/jenkins/buildStatus/icon?job=gh-million12-docker-haproxy)](https://jenkins.ozgo.info/jenkins/view/GH%20-%20million12%20-%20Docker/job/gh-million12-docker-haproxy/)
-[![GitHub Open Issues](https://img.shields.io/github/issues/million12/docker-haproxy.svg)](https://github.com/million12/docker-haproxy/issues)
-[![Stars](https://img.shields.io/github/stars/million12/docker-haproxy.svg?style=social&label=Stars)]()
-[![Fork](https://img.shields.io/github/forks/million12/docker-haproxy.svg?style=social&label=Fork)]()
+HAProxy Load Balancer
+===
+
+[![Build Status](https://jenkins.ozgo.info/jenkins/buildStatus/icon?job=ghp-million12-docker-haproxy)](https://jenkins.ozgo.info/jenkins/job/ghp-million12-docker-haproxy/) 
+[![GitHub Open Issues](https://img.shields.io/github/issues/million12/docker-haproxy.svg)](https://github.com/million12/docker-haproxy/issues)   
+[![Stars](https://img.shields.io/github/stars/million12/docker-haproxy.svg?style=social&label=Stars)](https://github.com/million12/docker-haproxy/stargazers)
+[![Fork](https://img.shields.io/github/forks/million12/docker-haproxy.svg?style=social&label=Fork)](https://github.com/million12/docker-haproxy/network/members)  
 [![Release](https://img.shields.io/github/release/million12/docker-haproxy.svg)](http://microbadger.com/images/million12/haproxy.svg)
 
-[![Docker build](http://dockeri.co/image/million12/haproxy)](https://hub.docker.com/r/million12/haproxy/)
+[![Docker build](https://dockeri.co/image/million12/haproxy)](https://hub.docker.com/r/million12/haproxy/)
 
-Felling like supporting me in my projects use donate button. Thank You!
-[![](https://img.shields.io/badge/donate-PayPal-blue.svg)](https://www.paypal.me/POzgo)
+Felling like supporting me in my projects use donate button. Thank You!  
+[![PayPal](https://img.shields.io/badge/donate-PayPal-blue.svg)](https://www.paypal.me/POzgo)
 
 HAProxy docker container [million12/haproxy](https://registry.hub.docker.com/u/million12/haproxy/) with ALPN and HTTP/2 support.
 
 ### Tags
+
 Please specify tag when deploying for specific version.
 Example:
 
-`million12/haproxy:latest`
-`million12/haproxy:1.9.2`
+`million12/haproxy:latest`  
+`million12/haproxy:2.1.2`
 
-# Features
+### Features
 
 * **Support for HTTP/2** with ALPN
 * CentOS 7 based
@@ -31,7 +34,7 @@ Example:
 * **Auto restart when config changes**
   This container comes with inotify to monitor changes in HAProxy config and **reload** HAProxy daemon. The reload is done in a way that no connection is lost.
 
-## ENV variables
+### ENV variables
 
 |Variable|Default Settings|Notes|
 |:--|:--|:--|
@@ -61,6 +64,7 @@ docker run -d \
   million12/haproxy \
   -n 10000
 ```
+
 Note: in this case config is mounted to its default location, so you don't need to modify
 `HAPROXY_CONFIG` variable.
 
@@ -78,9 +82,12 @@ docker run -d \
 `docker run -ti million12/haproxy -vv`
 
 ### Stats
+
 The default URL for stats is `http://CONTAINER_IP/admin?stats` with username:password ser to `admin:admin`.
+
+---
 
 ## Authors
 
-Author: Marcin ryzy Ryzycki (<marcin@m12.io>)
+Author: Marcin ryzy Ryzycki (<marcin@m12.io>)  
 Author: Przemyslaw Ozgo (<linux@ozgo.info>)
