@@ -1,0 +1,71 @@
+name: Build, Test & Stage HAProxy
+
+on:
+  push:
+    branches: [issue/*, feature/*]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Docker image
+        run: |
+          docker build -t million12/haproxy .
+
+      - name: Test image
+        run: |
+          #
+          # Test daemon mode (default settings)
+          #
+          docker run -d --cap-add NET_ADMIN -p 8080:80 --name haproxy million12/haproxy && sleep 1
+          curl -u admin:admin http://127.0.0.1:8080/admin?stats
+          docker rm -f haproxy || true
+
+          #
+          # Test providing custom HAProxy config
+          # Test restarting after making changes in that config
+          #
+          docker run -d --cap-add NET_ADMIN -p 8080:80 -v ${PWD}/container-files/etc/haproxy/haproxy.cfg:/haproxy/my-haproxy.cfg -e HAPROXY_CONFIG=/haproxy/my-haproxy.cfg --name haproxy million12/haproxy && sleep 5
+          # Test if HAProxy uses the provided alternative config
+          while true; do if docker logs haproxy | grep "HAProxy started with /haproxy/my-haproxy.cfg config"; then break; else sleep 1; fi done
+
+          # Make a change and check if HAProxy restarts
+          docker exec -i haproxy sh -c 'echo "" >> /haproxy/my-haproxy.cfg'
+          while true; do if docker logs haproxy | grep "HAProxy restarted"; then break; else sleep 1; fi done
+
+          # Check HAProxy stats
+          curl -sSLi http://127.0.0.1:8080/admin?stats | grep '401 Unauthorized'
+          curl -sSLi --user admin:admin http://127.0.0.1:8080/admin?stats
+          curl -sSLi --user admin:admin http://127.0.0.1:8080/admin?stats | grep '200 OK'
+          curl -sSLi --user admin:admin http://127.0.0.1:8080/admin?stats | grep 'Statistics Report'
+
+          # Make invalid entry
+          docker exec -i haproxy sh -c 'echo "blabla" >> /haproxy/my-haproxy.cfg'
+          docker exec -i haproxy sh -c 'cat /haproxy/my-haproxy.cfg | grep "blabla"'
+          docker rm -f haproxy || true
+          #
+          # Test whole stack with Nginx back-end @see Tests/docker-compose.yml
+          #
+          docker-compose -f Tests/docker-compose.yml up -d
+          sleep 5
+
+          # Test direct request to Nginx
+          curl -sSLi http://127.0.0.1:4080  | grep '200 OK'
+          curl -sSLi http://127.0.0.1:4080  | grep 'default vhost'
+          curl -sSLi --insecure https://127.0.0.1:4443 | grep '200'
+          curl -sSLi --insecure https://127.0.0.1:8443 | grep 'default vhost'
+
+          # Test requests via HAProxy
+          curl -sSLi http://127.0.0.1:8080 | grep '200 OK'
+          curl -sSLi http://127.0.0.1:8080 | grep 'default vhost'
+          curl -sSLi --insecure https://127.0.0.1:8443 | grep '200'
+          curl -sSLi --insecure https://127.0.0.1:8443 | grep 'default vhost'
+      - name: Stage Image
+        run: |
+          docker build -t million12/haproxy:${GITHUB_SHA::8} .
+          docker login  -u ${{ secrets.DOCKER_HUB_USER }} -p ${{ secrets.DOCKER_HUB_PASS }}
+          docker push million12/haproxy:${GITHUB_SHA::8}

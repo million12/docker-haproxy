@@ -1,8 +1,8 @@
 HAProxy Load Balancer
 ===
 
-[![Build Status](https://jenkins.ozgo.info/jenkins/buildStatus/icon?job=ghp-million12-docker-haproxy)](https://jenkins.ozgo.info/jenkins/job/ghp-million12-docker-haproxy/) 
-[![GitHub Open Issues](https://img.shields.io/github/issues/million12/docker-haproxy.svg)](https://github.com/million12/docker-haproxy/issues)   
+[![Build & Test HAProxy](https://github.com/million12/docker-haproxy/workflows/Build%20&%20Test%20HAProxy/badge.svg)](https://github.com/million12/docker-haproxy/actions)  
+[![GitHub Open Issues](https://img.shields.io/github/issues/million12/docker-haproxy.svg)](https://github.com/million12/docker-haproxy/issues)  
 [![Stars](https://img.shields.io/github/stars/million12/docker-haproxy.svg?style=social&label=Stars)](https://github.com/million12/docker-haproxy/stargazers)
 [![Fork](https://img.shields.io/github/forks/million12/docker-haproxy.svg?style=social&label=Fork)](https://github.com/million12/docker-haproxy/network/members)  
 [![Release](https://img.shields.io/github/release/million12/docker-haproxy.svg)](http://microbadger.com/images/million12/haproxy.svg)
@@ -20,7 +20,7 @@ Please specify tag when deploying for specific version.
 Example:
 
 `million12/haproxy:latest`  
-`million12/haproxy:2.1.2`
+`million12/haproxy:2.1.5`
 
 ### Features
 
