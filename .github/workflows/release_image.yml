@@ -16,5 +16,6 @@ jobs:
           docker login  -u ${{ secrets.DOCKER_HUB_USER }} -p ${{ secrets.DOCKER_HUB_PASS }}
           docker pull million12/haproxy:stage
           docker tag million12/haproxy:stage million12/haproxy:${RELEASE}
+          docker tag million12/haproxy:stage million12/haproxy:latest
           docker push million12/haproxy:${RELEASE}
           docker push million12/haproxy:latest
