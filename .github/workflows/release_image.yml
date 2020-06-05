@@ -14,7 +14,7 @@ jobs:
         run: |
           export RELEASE=$(grep "HAPROXY_VERSION=" Dockerfile | sed 's|^.*=||g' |awk '{print $1}' | sed 's|"||g')
           docker login  -u ${{ secrets.DOCKER_HUB_USER }} -p ${{ secrets.DOCKER_HUB_PASS }}
-          docker pull million12/haproxy:${GITHUB_SHA::8}
-          docker tag docker push million12/haproxy:${GITHUB_SHA::8} docker push million12/haproxy:${RELEASE}
+          docker pull million12/haproxy:stage
+          docker tag docker push million12/haproxy:stage docker push million12/haproxy:${RELEASE}
           docker push polinux/mkdocs:${RELEASE}
           docker push polinux/mkdocs:latest
