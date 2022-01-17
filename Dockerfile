@@ -6,7 +6,7 @@ ENV   HAPROXY_MJR_VERSION=2.5 \
       HAPROXY_ADDITIONAL_CONFIG='' \
       HAPROXY_PRE_RESTART_CMD='' \
       HAPROXY_POST_RESTART_CMD='' \
-      OPENSSL_VERSION=3.0.1
+      OPENSSL_VERSION=1.0.2u
 
 RUN \
   yum install -y epel-release && \
