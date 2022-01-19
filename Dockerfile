@@ -1,7 +1,7 @@
 FROM centos:centos7
 
 ENV   HAPROXY_MJR_VERSION=2.1 \
-  HAPROXY_VERSION=2.1.5 \
+  HAPROXY_VERSION=2.1.12 \
   HAPROXY_CONFIG='/etc/haproxy/haproxy.cfg' \
   HAPROXY_ADDITIONAL_CONFIG='' \
   HAPROXY_PRE_RESTART_CMD='' \
@@ -13,17 +13,21 @@ RUN \
   yum update -y && \
   `# Install build tools. Note: perl needed to compile openssl...` \
   yum install -y \
-  inotify-tools \
-  wget \
-  tar \
-  gzip \
-  make \
-  gcc \
-  perl \
-  pcre-devel \
-  zlib-devel \
-  iptables \
-  pth-devel && \
+    inotify-tools \
+    wget \
+    tar \
+    gzip \
+    make \
+    gcc \
+    perl \
+    pcre-devel \
+    zlib-devel \
+    iptables \
+    socat \
+    nc \
+    telnet \
+    mtr \
+    pth-devel && \
   `# Install newest openssl...` \
   wget -O /tmp/openssl.tgz https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz && \
   tar -zxf /tmp/openssl.tgz -C /tmp && \
