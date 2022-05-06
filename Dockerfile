@@ -50,8 +50,6 @@ RUN \
   USE_OPENSSL=1 \
   ADDLIB=-ldl \
   ADDLIB=-lpthread && make install && \
-
-  # CFLAGS="-O2 -g -fno-strict-aliasing -DTCP_USER_TIMEOUT=18" && make install && \
   rm -rf /tmp/haproxy* && \
   mkdir -p /var/lib/haproxy && \
   groupadd haproxy && adduser haproxy -g haproxy && chown -R haproxy:haproxy /var/lib/haproxy && \
