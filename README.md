@@ -25,7 +25,7 @@ Example:
 ### Features
 
 * **Support for HTTP/2** with ALPN
-* CentOS 7 based
+* RockyLinux based (migrated at `2.4.16`)
 * Ability to **provide any arguments to haproxy** process
   Any extra parameters provided to `docker run` will be passed directly to `haproxy` command.
   For example, if you run `docker run [run options] million12/haproxy -n 1000` you pass `-n 1000` to haproxy daemon.
