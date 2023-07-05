@@ -1,18 +1,17 @@
-FROM rockylinux:latest
+FROM debian:12
 
-ENV   HAPROXY_MJR_VERSION=2.4 \
-  HAPROXY_VERSION=2.4.16 \
+ENV   HAPROXY_MJR_VERSION=2.8 \
+  HAPROXY_VERSION=2.8.1 \
   HAPROXY_CONFIG='/etc/haproxy/haproxy.cfg' \
   HAPROXY_ADDITIONAL_CONFIG='' \
   HAPROXY_PRE_RESTART_CMD='' \
   HAPROXY_POST_RESTART_CMD='' \
-  OPENSSL_VERSION=3.0.2
+  OPENSSL_VERSION=3.1.1
 
 RUN \
-  yum install -y epel-release && \
-  yum update -y && \
+  apt update && \
   `# Install build tools. Note: perl needed to compile openssl...` \
-  yum install -y \
+  apt install -y \
     inotify-tools \
     wget \
     tar \
@@ -20,11 +19,11 @@ RUN \
     make \
     gcc \
     perl \
-    pcre-devel \
-    zlib-devel \
+    libpcre3-dev \
+    zlib1g-dev \
     iptables \
     socat \
-    nc \
+    netcat-traditional \
     telnet \
     mtr && \
   `# Install newest openssl...` \
@@ -32,7 +31,7 @@ RUN \
   tar -zxf /tmp/openssl.tgz -C /tmp && \
   cd /tmp/openssl-* && \
   ./config \
-    --openssldir=/etc/pki/tls \
+    --openssldir=/etc/ssl \
     no-shared zlib-dynamic && \
   make -j$(getconf _NPROCESSORS_ONLN) V= && make install_sw && \
   cd && rm -rf /tmp/openssl* && \
@@ -40,25 +39,26 @@ RUN \
   tar -zxvf /tmp/haproxy.tgz -C /tmp && \
   cd /tmp/haproxy-* && \
   make \
-  -j$(getconf _NPROCESSORS_ONLN) V= \
-  TARGET=linux-glibc \
-  USE_LINUX_TPROXY=1 \
-  USE_ZLIB=1 \
-  USE_REGPARM=1 \
-  USE_PCRE=1 \
-  USE_PCRE_JIT=1 \
-  USE_OPENSSL=1 \
-  ADDLIB=-ldl \
-  ADDLIB=-lpthread && make install && \
+    -j$(getconf _NPROCESSORS_ONLN) V= \
+    TARGET=linux-glibc \
+    USE_LINUX_TPROXY=1 \
+    USE_ZLIB=1 \
+    USE_REGPARM=1 \
+    USE_PCRE=1 \
+    USE_PCRE_JIT=1 \
+    USE_OPENSSL=1 \
+    ADDLIB=-ldl \
+    ADDLIB=-lpthread && make install && \
   rm -rf /tmp/haproxy* && \
   mkdir -p /var/lib/haproxy && \
-  groupadd haproxy && adduser haproxy -g haproxy && chown -R haproxy:haproxy /var/lib/haproxy && \
-  openssl genrsa -out /etc/pki/tls/dummy.key 2048 && \
-  openssl req -new -key /etc/pki/tls/dummy.key -out /etc/pki/tls/dummy.csr -subj "/C=GB/L=London/O=Company Ltd/CN=haproxy" && \
-  openssl x509 -req -days 3650 -in /etc/pki/tls/dummy.csr -signkey /etc/pki/tls/dummy.key -out /etc/pki/tls/dummy.crt && \
-  cat /etc/pki/tls/dummy.crt /etc/pki/tls/dummy.key > /etc/pki/tls/dummy.pem && \
-  yum remove -y make gcc pcre-devel && \
-  yum clean all && rm -rf /var/cache/yum
+  adduser --no-create-home --disabled-password --gecos "" haproxy && adduser haproxy haproxy && chown -R haproxy:haproxy /var/lib/haproxy && \
+  mkdir -p /etc/pki/tls && \
+  openssl genrsa -out /etc/ssl/private/dummy.key 2048 && \
+  openssl req -new -key /etc/ssl/private/dummy.key -out /etc/ssl/private/dummy.csr -subj "/C=GB/L=London/O=Company Ltd/CN=haproxy" && \
+  openssl x509 -req -days 3650 -in /etc/ssl/private/dummy.csr -signkey /etc/ssl/private/dummy.key -out /etc/ssl/private/dummy.crt && \
+  cat /etc/ssl/private/dummy.crt /etc/ssl/private/dummy.key > /etc/ssl/private/dummy.pem && \
+  apt remove -y make gcc libpcre3-dev && \
+  apt clean -y
 
 COPY container-files /
 

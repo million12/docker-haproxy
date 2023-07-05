@@ -1,3 +1,4 @@
+
 # Launch Nginx backend server
 nginx:
   image: million12/nginx
@@ -6,7 +7,6 @@ nginx:
     - '4443:443'
   environment:
     - NGINX_GENERATE_DEFAULT_VHOST=true
-
 
 # Launch HAProxy
 haproxy:
