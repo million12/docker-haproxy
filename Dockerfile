@@ -1,4 +1,4 @@
-FROM debian:12-slim
+FROM debian:12
 
 ENV   HAPROXY_MJR_VERSION=2.8 \
   HAPROXY_VERSION=2.8.1 \
