@@ -1,20 +1,22 @@
-# Launch Nginx backend server
-nginx:
-  image: million12/nginx
-  ports:
-    - '4080:80'
-    - '4443:443'
-  environment:
-    - NGINX_GENERATE_DEFAULT_VHOST=true
+version: "3"
 
+services:
+# Launch Nginx backend server
+  nginx:
+    image: million12/nginx
+    ports:
+      - '4080:80'
+      - '4443:443'
+    environment:
+      - NGINX_GENERATE_DEFAULT_VHOST=true
 
 # Launch HAProxy
-haproxy:
-  cap_add:
-    - NET_ADMIN
-  image: million12/haproxy
-  ports:
-    - '8080:80'
-    - '8443:443'
-  links:
-    - nginx:web.server
+  haproxy:
+    cap_add:
+      - NET_ADMIN
+    image: million12/haproxy
+    ports:
+      - '8080:80'
+      - '8443:443'
+    links:
+      - nginx:web.server
